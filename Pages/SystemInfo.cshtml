@@ -5,7 +5,125 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<h3>System Name</h3>
-<p>When Creating a Project the name "System1" is always selected as default however when dealing with multiple systems such as in a distributed System</p>
-<p>we may want to change the System Name as well as the System ID number, this can be easily done with a command instruction but is not very well explained in the official documentation.</p>
-<p>However i will provide you with an example and also a easy to fill template so you can copy and run it in your projects</p>
+<h3>System Name & ID Modification in WinCC OA</h3>
+
+<p>When creating a project, the default name "System1" is selected. However, in cases like a distributed system where you're dealing with multiple systems, there may arise a need to modify the system name and its corresponding ID.</p>
+<p>Although the modification can be performed using a command instruction, the official documentation might not provide a clear explanation. Here, we provide a comprehensive guide to achieving this.</p>
+
+<h4>Prerequisites</h4>
+<ul>
+    <li>This tool is included in the most recent version of WinCC OA. Access is only through the command line.</li>
+    <li>The project, whose name and ID you intend to change, must be completely stopped for the changes to take effect.</li>
+</ul>
+
+<h4>Step-by-Step Guide</h4>
+<ol>
+    <li>Navigate to the WinCC OA installation directory. For a default Windows installation, this would typically be: <code>C:\Siemens\Automation\WinCC_OA</code></li>
+    <li>Select the version of WinCC OA you're working with. For instance, if you're working with version 3.18, navigate to: <code>C:\Siemens\Automation\WinCC_OA\3.18\bin</code></li>
+    <li>Open your preferred command-line tool at this directory. You can use Visual Studio Code, traditional command prompt, developer shell, or any other command-line tool of your choice.</li>
+    <li>
+        Run the following command, modifying the placeholders accordingly:
+        <pre><code>WCCOAtoolSyncTypes -proj &lt;project_name&gt; -system &lt;new_system_number&gt; &lt;new_system_name&gt; -log +stderr</code></pre>
+        <i>Example:</i>
+        <pre><code>WCCOAtoolSyncTypes -proj TestProj -system 111 10TestP -log +stderr</code></pre>
+    </li>
+</ol>
+
+<h4>Outcome</h4>
+<p>Upon executing the above, you've effectively changed the default system ID and name. For instance, if you've modified the default system ID from 100 to 111 and changed "System1" to "10TestP", this will reflect in the System Information Tab in the Settings page. Alternatively, you can also verify these changes via a script:</p>
+
+<pre><code>DebugN(getSystemId(),getSystemName());</code></pre>
+
+<p>This will display the following log output:</p>
+<pre><code>WCCOAui1:[111]["10TestP:"]</code></pre>
+
+<h4>Generate Your Command</h4>
+
+<form id="commandGenerator">
+    <label for="projectName">Project Name:</label>
+    <input type="text" id="projectName" name="projectName" required>
+
+    <label for="systemId">New System ID:</label>
+    <input type="text" id="systemId" name="systemId" required>
+
+    <label for="systemName">New System Name:</label>
+    <input type="text" id="systemName" name="systemName" required>
+
+    <input type="button" value="Generate Command" onclick="generateCommand()">
+</form>
+
+<h5>Generated Command:</h5>
+<pre id="outputCommand"></pre>
+
+<script>
+    function generateCommand() {
+        var projectName = document.getElementById("projectName").value;
+        var systemId = document.getElementById("systemId").value;
+        var systemName = document.getElementById("systemName").value;
+
+        var formattedCommand = `WCCOAtoolSyncTypes -proj ${projectName} -system ${systemId} ${systemName} -log +stderr`;
+
+        document.getElementById("outputCommand").textContent = formattedCommand;
+    }
+</script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    input[type="button"]:hover {
+        background-color: #357ab7;
+    }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
+
