@@ -4,3 +4,124 @@
     ViewData["Title"] = "Word Wrap Trick";
 }
 <h1>@ViewData["Title"]</h1>
+
+<h3>Word Wrap Trick in WinCC OA</h3>
+
+<p>In WinCC OA, one of the more overlooked features is the word wrap for text. There are several ways to implement a word wrap that are included in the standard language. However, they all have their respective limitations. Some methods are exclusive to specific objects like the "text" or the "textfield" object and may not work for others like the "label". The property "text format" can be utilized but it's pixel width-centric and can cause issues with multiple languages.</p>
+
+<p>A common solution is to use one word wrap for certain objects and text format for others. But, there's an alternative that offers more flexibility: implementing the word wrap in the symbol code. Whether you're extracting the text from a DP property or it's being parsed some other way, the following code offers control on a character-by-character basis rather than being pixel-based:</p>
+
+<pre><code>
+int textLength = text.length();
+int space = text.count(" ");
+int currentLineLength = 0;
+int maxLineLength = 4;  // You can modify this as per your requirements.
+string wrappedText = "";
+
+for (int i = 0; i < textLength; i++) {
+    if (text[i] == ' ') {
+        if (currentLineLength + 1 > maxLineLength) {
+            wrappedText = wrappedText + "\n";
+            currentLineLength = 0;
+        } else {
+            currentLineLength++;
+        }
+    } else {
+        wrappedText = wrappedText + text[i];
+        currentLineLength++;
+    }
+}
+txtLabel.text(wrappedText);
+</code></pre>
+
+<p>To further refine this approach, especially for multilingual support, consider the modification below. This takes into account words of different languages such as "de", "of", "vor", and more:</p>
+
+<pre><code>
+int textLength = text.length();
+int space = text.count(" ");
+int currentLineLength = 0;
+int maxLineLength = 4;  // Modify this value as needed.
+string wrappedText = "";
+
+for (int i = 0; i < textLength; i++) {
+    if (text[i] == ' ') {
+        if (currentLineLength + 1 > maxLineLength) {
+            wrappedText = wrappedText + "\n";
+            currentLineLength = 0;
+        } else {
+            currentLineLength++;
+        }
+    } else if (text.mid(i, 3) == "de ") {
+        wrappedText = wrappedText + "de ";
+        i += 2;
+        currentLineLength += 3;
+    } else {
+        wrappedText = wrappedText + text[i];
+        currentLineLength++;
+    }
+}
+</code></pre>
+
+<p>Note: You can add more conditions for different words or adjust the maxLineLength for optimal wrapping. This script ensures compatibility with all symbols that accept strings.</p>
+
+<p>The above approach provides granular control over the wrapping process and offers a robust solution, especially when dealing with multilingual content in WinCC OA.</p>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
