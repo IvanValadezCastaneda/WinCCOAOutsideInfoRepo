@@ -3,7 +3,7 @@ name: Deploy Razor Pages to GitHub Pages
 on:
   push:
     branches:
-      - main   # Change to your default branch name
+      - master   # Change to your default branch name
 
 jobs:
   build-and-deploy:
