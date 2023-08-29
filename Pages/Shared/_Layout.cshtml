@@ -22,14 +22,24 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/SystemInfo">System Information</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Tips
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                                <a class="dropdown-item" asp-area="" asp-page="/SystemInfo">System Information</a>
+                                <!-- Add more categories here... -->
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/WordWrap">Word Wrap Trick</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/DollarParameterValidation">Dollar Parameter Validation Trick</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Tricks
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                                <a class="dropdown-item" asp-area="" asp-page="/WordWrap">Word Wrap Trick</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/DollarParameterValidation">Dollar Parameter Validation Trick</a>
+                                <!-- Add more categories here... -->
+                            </div>
                         </li>
                     </ul>
                 </div>

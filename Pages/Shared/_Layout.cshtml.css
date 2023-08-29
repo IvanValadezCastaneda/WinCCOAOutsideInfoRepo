@@ -1,48 +1,77 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
 }
 
-a {
-  color: #0077cc;
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-weight: bold;
+    color: #0077cc;
+}
+
+.navbar-toggler-icon {
+    background-color: #0077cc;
+}
+
+.navbar-collapse {
+    justify-content: flex-end;
+}
+
+.nav-item {
+    margin-right: 20px;
+}
+
+.container {
+    padding: 20px;
+}
+
+footer {
+    background-color: #fff;
+    border-top: 1px solid #e5e5e5;
+    padding: 15px 0;
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.9rem;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    background-color: #0077cc;
+    border-color: #0077cc;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    background-color: #0077cc;
+    color: #fff;
 }
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
+.border-top,
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-color: #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+a {
+    color: #0077cc;
+    text-decoration: none;
 }
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+@media (max-width: 768px) {
+    .nav-item {
+        margin-right: 10px;
+    }
 }

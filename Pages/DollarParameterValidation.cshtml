@@ -7,44 +7,43 @@
 
 <h3>Dollar Parameter Validation in WinCC OA</h3>
 
+<p>When working with symbols that are referenced across panels, need animation, or require parameters, managing dollar parameter errors becomes crucial. These errors often lead to messages like "Dollar parameter does not exist". Here's a trick to handle such errors effectively:</p>
+
 <pre><code>
 string dpNameDollarParameter = $sDpe;
 string DollarSubDirectory = $sDollarSubDirectory;
 const string dpName = DollarDefinition("dpNameDollarParameter");
 const string ProgressSubDirectory = DollarDefinition("DollarSubDirectory");
-</pre></code>
+</code></pre>
 
-<p></p>
-
-<p></p>
+<p>In the code above, you'll notice the usage of the <code>DollarDefinition</code> function. This function helps check the existence of a dollar parameter regardless of its count. If the parameter exists, it's returned. If not, it provides a message stating that the dollar parameter is not defined. Here are the details of the function:</p>
 
 <pre><code>
 public string DollarDefinition(string dollarName, string PanelFileName = "") {
-  if(!PanelFileName.isEmpty())
-  {
-    dyn_string DParams = getDollarParamsFromPanel(PanelFileName);
-    for(int i = 0; DParams.count() > i; i++){
-      if(DParams.at(i) == dollarName){
-        if(isDollarDefined(dollarName)){
-          return getDollarValue(dollarName);
+    if (!PanelFileName.isEmpty()) {
+        dyn_string DParams = getDollarParamsFromPanel(PanelFileName);
+        for (int i = 0; DParams.count() > i; i++) {
+            if (DParams.at(i) == dollarName) {
+                if (isDollarDefined(dollarName)) {
+                    return getDollarValue(dollarName);
+                } else {
+                    DebugN(dollarName + " not defined");
+                    return "$ErrorNotDefined";
+                }
+            }
         }
-        else{
-          DebugN(dollarName + " not defined");
-          return "$ErrorNotDefined";
-        }
-      }
+    } else if (isDollarDefined(dollarName)) {
+        return getDollarValue(dollarName);
     }
-  }
-  else if(isDollarDefined(dollarName))
-  {
-    return getDollarValue(dollarName);
-  }
 
-  DebugN(dollarName + " not found");
-  return "$ErrorNotFound";
+    DebugN(dollarName + " not found");
+    return "$ErrorNotFound";
 }
 </code></pre>
 
+<p>The <code>DollarDefinition</code> function is versatile. It can be part of a control script library. You'd call it to check if a dollar parameter is defined. Handling the errors and instantiation can be managed separately in your control script. This approach is particularly useful when dealing with a significant number of symbols or panels containing numerous dollar parameters.</p>
+
+<p>Feel free to modify the code according to your needs. This method is one among several ways to handle such errors and ensures better organization when working with complex projects.</p>
 
 <style>
     body {
