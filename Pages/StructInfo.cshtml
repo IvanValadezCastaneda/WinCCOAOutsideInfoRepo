@@ -1,0 +1,75 @@
+﻿@page
+@model WinCCOAOutsideInfoRepo.Pages.StructInfoModel
+@{
+    ViewData["Title"] = "Structs in WinCC OA";
+}
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <h3>Introduction to Structs</h3>
+    <p>Structs, short for structures, are user-defined data types in WinCC OA that allow you to create complex variables that can hold multiple data members. Each data member within a struct can have its own data type, such as strings, integers, booleans, etc.</p>
+
+    <h3>Declaration and Usage</h3>
+    <p>To declare a struct, you use the <code>struct</code> keyword followed by the struct's name and its members:</p>
+
+    <pre><code>
+    struct TestDetails {
+        string name;
+        bool StartStatus;
+        bool EndStatus;
+        int progress;
+        string color;
+        string status;
+    }
+    </code></pre>
+
+    <h3>Advantages of Structs</h3>
+    <p>Structs provide several benefits, such as:</p>
+
+    <ul>
+        <li>Memory efficiency: Structs are stack-allocated and have a smaller memory footprint compared to classes.</li>
+        <li>Performance: Accessing struct members is generally faster due to their memory locality.</li>
+        <li>Value semantics: Structs are value types, meaning they are copied when assigned, leading to predictable behavior.</li>
+    </ul>
+
+    <h3>Methods in Structs</h3>
+    <p>Structs can contain methods, just like classes. These methods can perform various operations and computations based on the struct's data members.</p>
+
+    <h3>Default Access Modifier</h3>
+    <p>Unlike classes, the members of a struct default to <code>public</code> access. This means that the members can be accessed from anywhere within the scope of the instance.</p>
+
+    <h3>Checking if a Data Type is a Struct</h3>
+    <p>In WinCC OA, you can use the <code>isDpTypeStruct()</code> function to check if a data point type is a struct type. This function returns <code>true</code> if the data point type is a struct.</p>
+
+    <h3>Conclusion</h3>
+    <p>Structs are a powerful feature in WinCC OA that allow you to define custom data types with their own members and methods. They are particularly useful for scenarios where you need to bundle related data together in a lightweight and efficient manner.</p>
+
+    <h3>Create Your Own Struct</h3>
+    <form method="post">
+        <div class="form-group">
+            <label for="structName">Struct Name:</label>
+            <input type="text" class="form-control" id="structName" name="StructName" required value="@TempData[nameof(Model.StructName)]">
+        </div>
+        <div class="form-group">
+            <label for="numMembers">Number of Data Members:</label>
+            <input type="number" class="form-control" id="numMembers" name="NumMembers" required value="@TempData[nameof(Model.NumMembers)]">
+        </div>
+        @for (int i = 0; i < Model.NumMembers; i++)
+        {
+            <div class="form-group">
+                <label for="memberType_@i">Data Member @i Type:</label>
+                <input type="text" class="form-control" id="memberType_@i" name="MemberType_@i" required value="@TempData[$"MemberType_{i}"]">
+            </div>
+        }
+        <button type="submit" class="btn btn-primary">Generate Struct</button>
+    </form>
+
+
+    @if (Model.GeneratedStruct != null)
+    {
+        <h3>Generated Struct Example:</h3>
+        <pre><code>@Model.GeneratedStruct</code></pre>
+    }
+
+
+</div>
