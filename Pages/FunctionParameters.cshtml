@@ -1,4 +1,121 @@
 ﻿@page
 @model WinCCOAOutsideInfoRepo.Pages.FunctionParametersModel
 @{
+    ViewData["Title"] = "Extended Function Parameters Info";
 }
+
+<style>
+    .container {
+        margin-top: 20px;
+    }
+
+    .card {
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s;
+    }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    .card-text {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: background-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .col-md-3 {
+        padding: 0 15px;
+    }
+</style>
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <h3>Extended Function Parameters Info</h3>
+    <p>In WinCC OA, parameters are an essential concept for passing and modifying data within functions and methods. Understanding how to work with parameters is crucial for effective scripting and logic implementation.</p>
+
+    <h3>Function Parameters</h3>
+    <p>When you define a function in WinCC OA, you can specify one or more parameters. These parameters determine the input values that the function expects. You can pass different types of data, including structures and primitive types, as parameters to functions.</p>
+
+    <h4>Passing a Structure as a Parameter</h4>
+    <p>Structures are user-defined data types that can be passed as parameters to functions. Here's an example of passing a structure as a parameter:</p>
+
+    <pre><code>
+    struct ScenarioDetails {
+        string name;
+        bool stationStartStatus;
+        bool stationEndStatus;
+        int progress;
+        string color;
+        string status;
+    }
+
+    public string GetColor(ScenarioDetails scenarioDetails) {
+        // Function logic here
+    }
+    </code></pre>
+
+    <h4>Reference Parameters</h4>
+    <p>WinCC OA allows you to use reference parameters to modify variables directly within a function. By using the ampersand (&) symbol, you can indicate that a parameter should be treated as a reference. This means any changes made to the parameter inside the function will affect the original variable.</p>
+
+    <pre><code>
+    public void GetScenarioProgress(string ScenarioPassed, int& ScenarioParsedProgress) {
+        // Function logic here
+    }
+    </code></pre>
+
+    <h4>Optional Parameters</h4>
+    <p>WinCC OA also supports optional parameters, allowing you to define functions with default values for some parameters. This can make your functions more flexible. Here's an example:</p>
+
+    <pre><code>
+    public void MyFunc(int a, string b = "Default") {
+        // Function logic here
+    }
+    </code></pre>
+
+    <h3>Best Practices for Handling Parameters</h3>
+    <p>While working with parameters in WinCC OA, it's essential to follow best practices to ensure clean and maintainable code. Here are some tips for handling parameters effectively:</p>
+
+    <ol>
+        <li><strong>Use Descriptive Names:</strong> Give your parameters meaningful names that indicate their purpose. This makes your code more readable and understandable.</li>
+
+        <li><strong>Document Your Parameters:</strong> Include comments or documentation to explain the purpose of each parameter, its data type, and any constraints or expectations.</li>
+
+        <li><strong>Avoid Excessive Parameters:</strong> Limit the number of parameters in your functions to keep them concise and focused. Consider grouping related data into structures when necessary.</li>
+
+        <li><strong>Use Reference Parameters Sparingly:</strong> While reference parameters can be powerful, use them judiciously. Overuse of reference parameters can lead to complex code that is hard to maintain.</li>
+
+        <li><strong>Validate Inputs:</strong> Check and validate input parameters to ensure they meet the expected criteria. Proper input validation helps prevent errors and unexpected behavior. Many datatypes already have this such as isEmpty() or isDpTypeStruct()</li>
+
+        <li><strong>Consistency Matters:</strong> Maintain a consistent parameter naming and ordering convention throughout your codebase to enhance code readability.</li>
+
+        <li><strong>Test Thoroughly:</strong> Write test cases to verify that your functions handle parameters correctly under various scenarios. Testing helps catch and prevent issues early. you can use Exception Handling in many ways to thorw errors or just DebugN statements</li>
+    </ol>
+
+    <p>By following these best practices, you can create well-structured functions and methods that are easy to understand, maintain, and debug.</p>
+
+
+    <h3>Limitations</h3>
+    <p>While you can pass a variety of data types as parameters, there are some limitations. For example, you cannot pass a va_start or va_list parameter, and certain complex types like shared_ptr may not be passed directly as function parameters.</p>
+
+    <h3>Conclusion</h3>
+    <p>Understanding how to work with parameters, including reference parameters and optional parameters, is crucial for efficient scripting and logic development in WinCC OA. By leveraging these concepts, you can build powerful and flexible functions to meet your project's requirements.</p>
+</div>
