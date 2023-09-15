@@ -3,3 +3,144 @@
 @{
     ViewData["Title"] = "Get Redundant and Distributed System Status";
 }
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <h3>Get Remote Systems</h3>
+    <p>In WinCC OA, you can work with remote systems to check their connection status and utilize this information for various purposes. This page explains  a little trick to show you how to determine if remote systems are connected and provides code examples for handling this data.</p>
+
+    <h3>Checking Remote System Connection</h3>
+    <p>To check if a remote system is connected, you can use the following function:</p>
+
+    <pre><code>
+    public bool RemoteSystemConnected(string RemoteSystemName) {
+        dyn_string Hosts;
+        string SystemConnections = getSystemName() + "_DistConnections.Dist.HostNames";
+        dpGet(SystemConnections, Hosts);
+
+        for (int i = 0; i < Hosts.count(); i++) {
+            string ConnectedSystem = Hosts.at(i);
+            if (ConnectedSystem.contains(RemoteSystemName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    </code></pre>
+
+    <p>This function returns a Boolean value indicating whether the specified remote system is connected.</p>
+
+    <h3>Utilizing Remote System Connection Status</h3>
+    <p>Once you know the connection status of remote systems, you can use it in your scripts to make informed decisions. Here's an example:</p>
+
+    <pre><code>
+    void HandleRemoteSystems(dyn_string Hosts) {
+        dyn_uint ids;
+        int rc = CheckRemoteSystemConnection(Hosts);
+        string statusMessage, backgroundColor;
+
+        switch (rc) {
+            case 0:
+                backgroundColor = "Green"; // Use a different color for your application
+                statusMessage = (Hosts.count() == 0) ? "No stations online" :
+                                (Hosts.count() == 1) ? "1 station online" :
+                                (Hosts.count() == 10) ? "All stations online" : "Multiple stations online";
+                break;
+            default:
+                backgroundColor = "Red"; // Use a different color for your application
+                statusMessage = "Error in distributed systems";
+                break;
+        }
+
+        // Set the background color and display the status message
+        YourUIElement.BackgroundColor = backgroundColor;
+        YourUIElement.Text = statusMessage.Replace(" ", "\n");
+    }
+
+    int CheckRemoteSystemConnection(dyn_string Hosts) {
+        dyn_uint ids;
+        int rc = getRemoteSystemNamesConnected(Hosts, ids);
+        return rc;
+    }
+    </code></pre>
+
+    <p>Or this one for a simpler approach</p>
+
+    <pre><code>
+    void HandleRemoteSystem(string RemoteSystemName) {
+        bool isConnected = RemoteSystemConnected(RemoteSystemName);
+
+        if (isConnected) {
+            // Perform actions when the remote system is connected
+        } else {
+            // Handle the case when the remote system is not connected
+        }
+    }
+    </code></pre>
+
+    <p>This example shows how you can use the <code>RemoteSystemConnected</code> function to determine whether a remote system is connected and take appropriate actions based on the result.</p>
+
+    <h3>Caution</h3>
+    <p>These examples are for illustration purposes, and you should adapt them to your specific requirements while protecting sensitive data.</p>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
