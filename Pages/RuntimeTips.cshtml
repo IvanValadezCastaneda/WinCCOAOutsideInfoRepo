@@ -3,4 +3,102 @@
 @{
     ViewData["Title"] = "$-Parameters in Runtime";
 }
-<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <h3>$-Parameters in Runtime</h3>
+    <p>Dollar parameters are a powerful feature in WinCC OA that streamline the process of passing parameters between panels during runtime. This page explores how dollar parameters work and how you can use them efficiently in your projects.</p>
+
+    <h3>Basic Understanding</h3>
+    <p>When a panel is in runtime, dollar parameters are initialized. If a dollar parameter has been set in the panel, it can be accessed and utilized during runtime. The foundation of this concept is crucial for object-oriented programming with exclusive parameters in WinCC OA.</p>
+
+    <h3>Passing Dollar Parameters</h3>
+    <p>Passing dollar parameters is straightforward. If you have a panel that represents a class or object, you can use the instance of that class and associate it with a dollar parameter. The dollar parameter is then called using the name of the instance or object, allowing you to work with it in runtime.</p>
+
+    <h3>Nesting Panels and Dollar Parameters</h3>
+    <p>One powerful aspect of dollar parameters is their behavior when panels are nested within each other. When you place a panel inside another panel as a reference, and both panels have the same named dollar parameter, the dollar parameter is automatically passed to all subsequent references inside the nested panels.</p>
+
+    <p>Here's an illustration:</p>
+    <pre><code>
+    |__[$sReservoir] &lt;- First Reference
+    |
+    |____[$sPump],[$sPump],[$sMotor],[$sReservoir],[$sMotor] &lt;- Second Reference
+    |
+    |________[$sPump],[$sMotor],[$sReservoir] &lt;- Final Reference
+    </code></pre>
+
+    <p>In this example, as long as the dollar parameter is named the same in all panels, it will be passed automatically to all references. This means you don't have to pass the same parameter multiple times and can simplify your panel interactions.</p>
+
+    <h3>Practical Use Cases</h3>
+    <p>Consider a scenario where you have a symbol representing a pump. You place this symbol inside an array of pumps, and then that array inside a larger panel representing a building full of pumps. If you use the same named dollar parameter in all these panels, it will be propagated automatically throughout the entire hierarchy. You only need to define it once, saving time and effort in parameter passing.</p>
+
+    <h3>Conclusion</h3>
+    <p>Dollar parameters are a key feature in WinCC OA that allow you to pass parameters efficiently between panels in runtime. By understanding how they work and utilizing them effectively, you can simplify your project's parameter passing, leading to more streamlined and manageable applications.</p>
+
+    <h3>Caution</h3>
+    <p>While dollar parameters offer convenience, it's essential to remember that as long as you pass that dollar parameter, it will reference the same variable throughout all nested panels. For example, if you have two pumps and two motors within a second reference panel, both pumps and both motors will refer to the same instance.</p>
+
+    <p>If you wish to avoid having duplicate instances in a panel or reference panel, it's important to consider your naming scheme or implement additional validation in the second reference panel's main function. This will help ensure that you don't inadvertently create multiple instances of the same object. However, this feature also allows you to pass a dollar parameter once at the very end, and it will propagate throughout all nested panels, streamlining your parameter passing.</p>
+
+</div>
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
