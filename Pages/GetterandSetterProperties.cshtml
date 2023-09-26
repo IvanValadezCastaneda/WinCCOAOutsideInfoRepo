@@ -3,3 +3,119 @@
 @{
     ViewData["Title"] = "Getters and Setters for Properties in Panels";
 }
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <h3>Creating Getters and Setters for Properties</h3>
+    <p>In WinCC OA, you can easily create getters and setters for properties that allow you to read and modify values within your panels or reference panels. This simple trick simplifies the process of working with properties and enhances code organization.</p>
+
+    <h3>Example: String Property</h3>
+    <p>Let's start with an example of creating a getter and setter for a string property named 'Hour':</p>
+
+    <pre><code>
+    #property string Hour
+
+    string g_Hour;
+
+    public string getHour()
+    {
+        return g_Hour;
+    }
+
+    public void setHour(string Hour)
+    {
+        g_Hour = Hour;
+    }
+    </code></pre>
+
+    <p>In this example, we've defined a string property 'Hour' and created a getter and setter for it. The getter retrieves the current value of 'Hour,' while the setter allows you to update it.</p>
+
+    <h3>Generate Getters and Setters</h3>
+    <p>Now, you can use the following form to generate getters and setters for your properties. Simply enter the desired data type, property name, and click the "Generate Command" button:</p>
+
+    <form id="commandGenerator">
+        <label for="dataType">Data Type:</label>
+        <input type="text" id="dataType" name="dataType" required>
+
+        <label for="propertyName">Property Name:</label>
+        <input type="text" id="propertyName" name="propertyName" required>
+
+        <input type="button" value="Generate Getter and Setter" onclick="generateGetterSetter()">
+    </form>
+
+    <h5>Generated Getter and Setter:</h5>
+    <pre id="outputGetterSetter"></pre>
+
+    <script>
+        function generateGetterSetter() {
+            var dataType = document.getElementById("dataType").value;
+            var propertyName = document.getElementById("propertyName").value;
+
+            var formattedGetterSetter = `#property ${dataType} ${propertyName}\n\n${dataType} g_${propertyName};\n\npublic ${dataType} get${propertyName}()\n{\n    return g_${propertyName};\n}\n\npublic void set${propertyName}(${dataType} ${propertyName})\n{\n    g_${propertyName} = ${propertyName};\n}`;
+
+            document.getElementById("outputGetterSetter").textContent = formattedGetterSetter;
+        }
+    </script>
+</div>
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
