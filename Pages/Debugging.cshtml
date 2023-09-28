@@ -7,23 +7,63 @@
 <div class="container">
     <h1>@ViewData["Title"]</h1>
 
-    <h3>Error Handling</h3>
-    <p>Error handling is crucial in WinCC OA project development. Learn to identify and manage different error types, utilize try-catch blocks, and log errors for analysis.</p>
+    <h3>Error Handling in WinCC OA</h3>
+    <p>Error handling is a critical aspect of WinCC OA project development. It involves identifying, managing, and gracefully recovering from different types of errors that may occur during the execution of your scripts and modules.</p>
 
-    <h3>Log Analysis</h3>
-    <p>Understand the importance of log files in diagnosing issues. Explore log file locations, log levels, and the Log Viewer tool for effective log analysis.</p>
+    <h4>Identifying Error Types</h4>
+    <p>Understanding the various error types that can occur in WinCC OA is essential. These errors can range from syntax errors and logic errors in your scripts to configuration errors in your data points. Common error types include:</p>
+    <ul>
+        <li><strong>Syntax Errors:</strong> These errors occur due to incorrect syntax in your script or module code. Examples include missing semicolons or brackets.</li>
+        <li><strong>Logic Errors:</strong> Logic errors result from flawed programming logic that leads to unexpected behavior. Identifying and fixing these errors is essential for script reliability.</li>
+        <li><strong>Configuration Errors:</strong> Errors related to data point configuration, such as incorrect data types or invalid addresses, can disrupt data exchange with external systems.</li>
+        <li><strong>Communication Errors:</strong> When WinCC OA communicates with external systems or devices, communication errors may occur, such as timeouts or connection issues.</li>
+    </ul>
 
-    <h3>Debugging Tools</h3>
-    <p>Discover WinCC OA's debugging tools, including the integrated debugger, breakpoints, Watch, and Locals windows. Learn to use them for efficient code inspection and correction.</p>
+    <h4>Utilizing Try-Catch Blocks</h4>
+    <p>WinCC OA provides powerful error-handling capabilities through try-catch blocks. These blocks allow you to encapsulate code that might generate errors and provide a mechanism to handle those errors gracefully.</p>
 
-    <h3>Common Debugging Scenarios</h3>
-    <p>Explore real-world debugging scenarios, such as data point issues, script logic errors, communication problems, and visualization debugging. Gain insights into how to approach and resolve these issues.</p>
+    <p>Here's an example of using a try-catch block in WinCC OA:</p>
 
-    <h3>Best Practices</h3>
-    <p>Adopt best practices for effective troubleshooting and debugging. Learn to isolate issues, test hypotheses, and document debugging steps for future reference.</p>
+    <pre><code>
+try
+{
+    // Code that might generate an error
+    int result = 10 / 0; // This line will cause a division by zero exception
+}
+catch (Exception e)
+{
+    // Handle the error
+    ErrorLog("An error occurred: " + e.message());
+}
+    </code></pre>
 
-    <h3>Real-Life Examples</h3>
-    <p>Review real-life debugging examples with code snippets, log entries, and step-by-step procedures. Practice your debugging skills with hands-on examples.</p>
+    <p>In this example, the code inside the try block attempts to perform a division by zero, which is an error. The catch block captures the error and logs an error message using the <code>ErrorLog</code> function.</p>
+
+    <h4>Logging Errors for Analysis</h4>
+    <p>Logging errors is essential for diagnosing and resolving issues in WinCC OA projects. You can use the built-in logging mechanisms to record error messages and other diagnostic information. WinCC OA provides different log levels, including:</p>
+    <ul>
+        <li><strong>Debug:</strong> For detailed debugging information during development.</li>
+        <li><strong>Info:</strong> For general informational messages.</li>
+        <li><strong>Warning:</strong> For warnings that do not halt the application but should be noted.</li>
+        <li><strong>Error:</strong> For critical errors that require immediate attention.</li>
+    </ul>
+
+    <p>Here's an example of logging an error in WinCC OA:</p>
+
+    <pre><code>
+try
+{
+    // Code that might generate an error
+    int result = 10 / 0; // This line will cause a division by zero exception
+}
+catch (Exception e)
+{
+    // Log the error as an 'Error' level message
+    Log("An error occurred: " + e.message(), LOG_ERROR);
+}
+    </code></pre>
+
+    <p>By logging errors, you create a valuable record of issues that can be reviewed and analyzed later. This information is crucial for troubleshooting and debugging your WinCC OA projects effectively.</p>
 </div>
 
 
