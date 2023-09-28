@@ -1,0 +1,88 @@
+﻿@page
+@model WinCCOAOutsideInfoRepo.Pages.DebuggingModel
+@{
+    ViewData["Title"] = "Troubleshooting and Debugging in WinCC OA";
+}
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <h3>Error Handling</h3>
+    <p>Error handling is crucial in WinCC OA project development. Learn to identify and manage different error types, utilize try-catch blocks, and log errors for analysis.</p>
+
+    <h3>Log Analysis</h3>
+    <p>Understand the importance of log files in diagnosing issues. Explore log file locations, log levels, and the Log Viewer tool for effective log analysis.</p>
+
+    <h3>Debugging Tools</h3>
+    <p>Discover WinCC OA's debugging tools, including the integrated debugger, breakpoints, Watch, and Locals windows. Learn to use them for efficient code inspection and correction.</p>
+
+    <h3>Common Debugging Scenarios</h3>
+    <p>Explore real-world debugging scenarios, such as data point issues, script logic errors, communication problems, and visualization debugging. Gain insights into how to approach and resolve these issues.</p>
+
+    <h3>Best Practices</h3>
+    <p>Adopt best practices for effective troubleshooting and debugging. Learn to isolate issues, test hypotheses, and document debugging steps for future reference.</p>
+
+    <h3>Real-Life Examples</h3>
+    <p>Review real-life debugging examples with code snippets, log entries, and step-by-step procedures. Practice your debugging skills with hands-on examples.</p>
+</div>
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
