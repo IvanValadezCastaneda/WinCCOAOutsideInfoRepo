@@ -94,36 +94,25 @@
 
     <p>Remember to replace <code>YourStationName</code>, <code>YourDeviceType</code>, and <code>YourStartDate</code> with your specific values.</p>
 
-    <h3>Generating SQL Queries Programmatically</h3>
-    <p>If you need to generate SQL queries dynamically based on user input or specific criteria, you can create a custom function. Here's a sample function in C# that generates SQL queries:</p>
+    <h3>Generate Your SQL Query</h3>
+    <form method="post">
+        <label for="tableName">Table Name:</label>
+        <input type="text" id="tableName" name="TableName" />
 
-    <pre><code>
-    public string GenerateSqlQuery(string tableName, string[] columns, string[] conditions)
+        <label for="columns">Columns (comma-separated):</label>
+        <input type="text" id="columns" name="Columns" />
+
+        <label for="conditions">Conditions (comma-separated AND conditions):</label>
+        <input type="text" id="conditions" name="Conditions" />
+
+        <input type="submit" value="Generate SQL Query" />
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.GeneratedQuery))
     {
-        string query = "SELECT ";
-
-        // Specify columns to retrieve
-        if (columns != null && columns.Length > 0)
-        {
-            query += string.Join(", ", columns);
-        }
-        else
-        {
-            query += "*"; // Retrieve all columns if none specified
-        }
-
-        // Add table name
-        query += " FROM " + tableName;
-
-        // Add conditions
-        if (conditions != null && conditions.Length > 0)
-        {
-            query += " WHERE " + string.Join(" AND ", conditions);
-        }
-
-        return query;
+        <h4>Generated SQL Query:</h4>
+        <pre>@Model.GeneratedQuery</pre>
     }
-    </code></pre>
 
     <p>This function allows you to generate SQL queries by providing the table name, an array of columns to retrieve, and an array of conditions. It constructs a valid SQL query string based on your input.</p>
 </div>
