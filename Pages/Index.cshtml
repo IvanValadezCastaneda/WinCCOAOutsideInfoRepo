@@ -5,45 +5,75 @@
 }
 
 <style>
-    .container {
-        margin-top: 20px;
-    }
+.container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    align-items: stretch;
+}
 
-    .card {
-        border: 1px solid #e5e5e5;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s;
-    }
+.card {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+    display: flex; 
+    flex-direction: column;
+    margin: 0 15px 30px;
+    min-width: 250px; 
+    max-width: 300px;
+    width: 100%; 
+    flex: 1; 
+}
 
-        .card:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-    .card-title {
-        font-size: 1.25rem;
-        margin-bottom: 10px;
-    }
+.card-body {
+    flex: 1;
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between; 
+}
 
-    .card-text {
-        color: #6c757d;
-        font-size: 0.9rem;
-        margin-bottom: 20px;
-    }
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
 
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-        transition: background-color 0.3s;
-    }
+.card-text {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s;
+}
 
-    .col-md-3 {
-        padding: 0 15px;
-    }
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-md-3 {
+    flex: 0 0 25%; /* Sets the base width for the flex item */
+    max-width: 25%; /* Prevents it from growing beyond this max width */
+    padding-right: 15px;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
 </style>
 
 <div class="container">
