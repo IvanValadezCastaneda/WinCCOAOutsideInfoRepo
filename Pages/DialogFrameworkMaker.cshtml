@@ -1,6 +1,7 @@
 ﻿@page
 @model WinCCOAOutsideInfoRepo.Pages.DialogFrameworkMakerModel
 @{
+    ViewData["Title"] = "Create Dialog Framework";
 }
 <style>
     body {
@@ -61,3 +62,51 @@
         border-radius: 4px;
     }
 </style>
+<div class="container">
+    <h1>@ViewData["Title"]]</h1>
+    <h3>Custom Dialog Framework Generator</h3>
+    <p>With the Dialog Framework, you can create various types of dialogues such as warnings, questions, or general information within WinCC OA. Customize your dialog by selecting options and generate a ready-to-use script.</p>
+
+    <form method="post">
+        <div>
+            <label for="dialogType">Dialog Type:</label>
+            <select id="dialogType" name="DialogType">
+                <option value="general">General</option>
+                <option value="information">Information</option>
+                <option value="input">Input</option>
+                <option value="multiLanguages">Multi Languages</option>
+                <option value="question">Question</option>
+                <option value="warning">Warning</option>
+            </select>
+        </div>
+        <div>
+            <label for="text">Text:</label>
+            <input type="text" id="text" name="Text" />
+        </div>
+        <div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="Title" />
+        </div>
+        <div>
+            <label for="buttonTextOk">Button Text OK:</label>
+            <input type="text" id="buttonTextOk" name="ButtonTextOk" />
+        </div>
+        <div>
+            <label for="buttonTextNOk">Button Text NOK:</label>
+            <input type="text" id="buttonTextNOk" name="ButtonTextNOk" />
+        </div>
+        <div>
+            <label for="titleColor">Title Color:</label>
+            <input type="text" id="titleColor" name="TitleColor" />
+        </div>
+        <!-- Add other input fields for additional dialog options -->
+
+        <input type="submit" value="Generate Dialog Script" />
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.GeneratedScript))
+    {
+        <h2>Generated Dialog Script:</h2>
+        <pre>@Model.GeneratedScript</pre>
+    }
+</div>
