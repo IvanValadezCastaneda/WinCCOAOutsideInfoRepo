@@ -63,7 +63,7 @@
     }
 </style>
 <div class="container">
-    <h1>@ViewData["Title"]]</h1>
+    <h1>@ViewData["Title"]</h1>
     <h3>Custom Dialog Framework Generator</h3>
     <p>With the Dialog Framework, you can create various types of dialogues such as warnings, questions, or general information within WinCC OA. Customize your dialog by selecting options and generate a ready-to-use script.</p>
 
@@ -99,7 +99,25 @@
             <label for="titleColor">Title Color:</label>
             <input type="text" id="titleColor" name="TitleColor" />
         </div>
-        <!-- Add other input fields for additional dialog options -->
+        <div>
+            <label for="extraTitle">Extra Title (multiLanguages):</label>
+            <input type="text" id="extraTitle" name="ExtraTitle" />
+        </div>
+        <div>
+            <label for="units">Units (input):</label>
+            <input type="text" id="units" name="Units" />
+        </div>
+        <div>
+            <label for="helpLink">Help Link:</label>
+            <input type="text" id="helpLink" name="HelpLink" />
+        </div>
+        <div>
+            <label for="enableAllButtons">Enable All Buttons:</label>
+            <select id="enableAllButtons" name="EnableAllButtons">
+                <option value="False">False</option>
+                <option value="True">True</option>
+            </select>
+        </div>
 
         <input type="submit" value="Generate Dialog Script" />
     </form>

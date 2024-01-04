@@ -12,7 +12,10 @@ namespace WinCCOAOutsideInfoRepo.Pages
         [BindProperty] public string ButtonTextOk { get; set; }
         [BindProperty] public string ButtonTextNOk { get; set; }
         [BindProperty] public string TitleColor { get; set; }
-        // Add other properties as necessary
+        [BindProperty] public string ExtraTitle { get; set; }
+        [BindProperty] public string Units { get; set; }
+        [BindProperty] public string HelpLink { get; set; }
+        [BindProperty] public string EnableAllButtons { get; set; }
 
         public string GeneratedScript { get; private set; }
 
@@ -25,7 +28,6 @@ namespace WinCCOAOutsideInfoRepo.Pages
                 {"buttonTextOk", ButtonTextOk},
                 {"buttonTextNOk", ButtonTextNOk},
                 {"titleColor", TitleColor},
-                // Add other dialog options as key-value pairs
             };
 
             GeneratedScript = GenerateDialogScript(DialogType, mappingEntries);
@@ -48,7 +50,27 @@ namespace WinCCOAOutsideInfoRepo.Pages
                 }
             }
 
-            scriptBuilder.Remove(scriptBuilder.Length - 2, 2); // Remove trailing comma and space
+            if (!string.IsNullOrEmpty(ExtraTitle))
+            {
+                scriptBuilder.Append($"\"extraTitle\", \"{ExtraTitle}\", ");
+            }
+
+            if (!string.IsNullOrEmpty(Units))
+            {
+                scriptBuilder.Append($"\"units\", \"{Units}\", ");
+            }
+
+            if (!string.IsNullOrEmpty(HelpLink))
+            {
+                scriptBuilder.Append($"\"helpLink\", \"{HelpLink}\", ");
+            }
+
+            if (!string.IsNullOrEmpty(EnableAllButtons))
+            {
+                scriptBuilder.Append($"\"enableAllButtons\", {EnableAllButtons}, ");
+            }
+
+            scriptBuilder.Remove(scriptBuilder.Length - 2, 2);
             scriptBuilder.AppendLine("));");
             scriptBuilder.AppendLine("  DebugN(\"Button pressed: \" + answer);");
             scriptBuilder.AppendLine("}");
