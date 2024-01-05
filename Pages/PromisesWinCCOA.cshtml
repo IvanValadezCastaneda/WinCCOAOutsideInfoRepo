@@ -1,4 +1,148 @@
 ﻿@page
 @model WinCCOAOutsideInfoRepo.Pages.PromisesWinCCOAModel
 @{
+    ViewData["Title"] = "OnReturn Functions in Modals";
 }
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <p>This page details the functions in WinCC OA that handle child panels with return values, similar to promises or async/await in JavaScript. These functions allow for the execution of a child panel and returning values back to the parent upon completion.</p>
+
+    <h2>PanelOffReturn()</h2>
+    <p>Closes a child panel and returns values to the parent panel. This function should be used in lieu of a simple close when data needs to be passed back.</p>
+    <pre><code>
+    main() {
+       dyn_float f;
+       dyn_string s;
+       PanelOffReturn(f, s);
+       // Additional script logic
+    }
+    </code></pre>
+
+    <h2>ChildPanelOnCentralModalReturn()</h2>
+    <p>Opens a modal child panel, centered within the parent panel, and returns values after the child panel is closed.</p>
+    <pre><code>
+    main() {
+        dyn_float dreturnf;
+        dyn_string dreturns;
+        string strvar = "example";
+        ChildPanelOnCentralModalReturn("ChildPanels.pnl", "Testpanel", makeDynString("$p1:first", "$p2:"+strvar), dreturnf, dreturns);
+        DebugN("Return values from the child panel", dreturnf);
+        DebugN(dreturns);
+    }
+    </code></pre>
+
+    <!-- Add sections for ChildPanelOnCentralReturn() and ChildPanelReturnValue() -->
+
+    <h2>Using Dialog Functions with Return Values</h2>
+    <p>These dialog functions are particularly useful when a panel needs to perform operations and then pass results back to the calling panel. Instead of navigating away or storing interim results in data points, these functions streamline the process by managing the flow directly through return values.</p>
+
+    <h2>Best Practices</h2>
+    <p>When using these functions:</p>
+    <ul>
+        <li>Ensure the child panel is properly initialized with necessary parameters.</li>
+        <li>Use modal functions to focus user interaction on the child panel until completion.</li>
+        <li>Manage return values effectively to handle user decisions and input from the child panel.</li>
+    </ul>
+
+    <p>To call a child panel and receive return values, you can use functions such as ChildPanelOnReturn(). This function opens a child panel and waits for it to close before continuing execution, at which point it retrieves the return values set in the child panel.</p>
+    <pre><code>
+    // This is an example of calling a child panel and processing its return values.
+    main() {
+        DebugN("Preparing to open child panel");
+        dyn_float returnFloats;
+        dyn_string returnStrings;
+        int posX = 800;
+        int posY = 100;
+        ChildPanelOnReturn("path/to/child/panel.xml", "Child Panel Title", makeDynString("$param1:value1"), posX, posY, returnFloats, returnStrings);
+
+        // Processing the returned values
+        ProcessReturnValues(returnStrings);
+    }
+
+    // Function to process the returned string values from the child panel
+    void ProcessReturnValues(dyn_string returnStrings) {
+        for (int i = 1; i <= len(returnStrings); ++i) {
+            DebugN("Returned String: " + returnStrings.at(i));
+        }
+    }
+    </code></pre>
+
+    <h2>Setting Return Values in a Child Panel</h2>
+    <p>In the child panel, you can set the return values using the dpSet function to assign values to the reserved data points. Or just have it in the memory of the panel itslef its okay either way as long as it can handle those parameters back</p>
+    <pre><code>
+    // This function is called within the child panel to set return values before closing.
+    void SetAndCloseChildPanel(dyn_string dataToReturn) {
+        dpSet("_Ui_" + myManNum() + ".ReturnValue.Text", dataToReturn);
+        PanelOff();
+    }
+    </code></pre>
+
+    <h2>Important Considerations</h2>
+    <ul>
+        <li>Always validate the return values from the child panel before using them.</li>
+        <li>Ensure the child panel is properly handling user input and setting the return values before it is closed.</li>
+        <li>Use appropriate naming conventions and avoid exposing sensitive information in your script variables and function names.</li>
+    </ul>
+</div>
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
