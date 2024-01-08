@@ -5,45 +5,76 @@
 }
 
 <style>
-    .container {
-        margin-top: 20px;
-    }
+.container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Adjusted to flex-start for consistent alignment */
+    align-items: stretch;
+}
 
-    .card {
-        border: 1px solid #e5e5e5;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s;
-    }
+.card {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+    display: flex; 
+    flex-direction: column;
+    margin: 0 15px 30px;
+    min-width: 250px; /* Minimum width */
+    max-width: 300px; /* Maximum width */
+    width: 100%; /* Flex basis width */
+    flex: 1; /* Grow to fill the space */
+    overflow: hidden; /* Ensures the content does not overflow */
+}
 
-        .card:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+.card-body {
+    flex: 1 1 auto; /* Flex-grow, flex-shrink, flex-basis */
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between; 
+    padding: 15px; /* Padding inside card */
+}
 
-    .card-title {
-        font-size: 1.25rem;
-        margin-bottom: 10px;
-    }
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
 
-    .card-text {
-        color: #6c757d;
-        font-size: 0.9rem;
-        margin-bottom: 20px;
-    }
+.card-text {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Allows the text to grow and push the button down */
+}
 
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-        transition: background-color 0.3s;
-    }
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s;
+    margin-top: auto; /* Pushes the button to the bottom */
+}
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
+.btn-primary:hover {
+    background-color: #0056b3;
+}
 
-    .col-md-3 {
-        padding: 0 15px;
-    }
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-md-3 {
+    flex: 0 0 25%; /* Sets the base width for the flex item */
+    max-width: 25%; /* Prevents it from growing beyond this max width */
+    padding-right: 15px;
+    padding-left: 15px;
+    box-sizing: border-box;
+    display: flex; /* Set display flex to align the cards vertically */
+    align-items: stretch; /* Stretch items to fill the height */
+}
 </style>
 
 <div class="container">
@@ -135,8 +166,62 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Function that returns the Data Types Accordingly</h5>
-                    <p class="card-text">A trick function that allows you to get the Data types of variables in a better way</p>
+                    <p class="card-text">Data Type Checking of variables in a better way</p>
                     <a asp-area="" asp-page="/isDataType" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">SQL Query Construction</h5>
+                    <p class="card-text">A basic Overview of how to introduce SQL Queries in WinCC OA</p>
+                    <a asp-area="" asp-page="/SQLQueries" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Conversion to Time from JSON</h5>
+                    <p class="card-text">A quick script that you can use to convert a JSON back into time</p>
+                    <a asp-area="" asp-page="/TimeConversionJSON" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">UTC Time Conversion Trick</h5>
+                    <p class="card-text">A snippet to transform a UTC time back to its original time for WinCC OA</p>
+                    <a asp-area="" asp-page="/UTCTimeConversion" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Dialog Framework Maker</h5>
+                    <p class="card-text">Auto Dialog Framework Maker Script Generation</p>
+                    <a asp-area="" asp-page="/DialogFrameworkMaker" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">On Return Functions in WinCC OA</h5>
+                    <p class="card-text">Similar to Promises these Functions will help get values in return of precesses</p>
+                    <a asp-area="" asp-page="/DialogFrameworkMaker" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Day Time Picker in WinCC OA</h5>
+                    <p class="card-text">Day Picker included in WinCC OA and some extra options</p>
+                    <a asp-area="" asp-page="/DayPicker" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
         </div>

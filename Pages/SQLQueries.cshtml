@@ -1,0 +1,118 @@
+﻿@page
+@model WinCCOAOutsideInfoRepo.Pages.SQLQueriesModel
+@{
+    ViewData["Title"] = "SQL Query Constructor";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <h3>Creating SQL Queries</h3>
+    <p>In WinCC OA, you can use SQL queries to retrieve data from databases using the <code>dbOpenRecordset()</code> function. To create a valid SQL query, follow these steps:</p>
+
+    <ol>
+        <li><strong>Define the Database Connection:</strong> First, establish a database connection using <code>dbOpenConnection()</code>. Ensure you have the necessary connection string with the correct database details.</li>
+
+        <li><strong>Construct the SQL Query:</strong> Build your SQL query based on your data retrieval requirements. Here's a basic template:</li>
+    </ol>
+
+    <pre><code>
+    string sqlQuery = "SELECT * FROM YourTableName WHERE YourConditions";
+    </code></pre>
+
+    <p>Replace <code>YourTableName</code> with the name of the table or data source you want to query and <code>YourConditions</code> with the desired conditions.</p>
+
+    <p>For more complex queries, you can use variables and parameters to customize your query. Here's an example:</p>
+
+    <pre><code>
+    string stationName = "YourStationName";
+    string deviceType = "YourDeviceType";
+    string startDate = "YourStartDate";
+
+    string complexQuery = "SELECT * FROM \"" + stationName + "\".\"" + deviceType + "\" WHERE fecha >= '" + startDate + "'";
+    </code></pre>
+
+    <p>Remember to replace <code>YourStationName</code>, <code>YourDeviceType</code>, and <code>YourStartDate</code> with your specific values.</p>
+
+    <h3>Generate Your SQL Query</h3>
+    <form method="post">
+        <label for="tableName">Table Name:</label>
+        <input type="text" id="tableName" name="TableName" />
+
+        <label for="columns">Columns (comma-separated):</label>
+        <input type="text" id="columns" name="Columns" />
+
+        <label for="conditions">Conditions (comma-separated AND conditions):</label>
+        <input type="text" id="conditions" name="Conditions" />
+
+        <input type="submit" value="Generate SQL Query" />
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.GeneratedQuery))
+    {
+        <h4>Generated SQL Query:</h4>
+        <pre>@Model.GeneratedQuery</pre>
+    }
+
+    <p>This function allows you to generate SQL queries by providing the table name, an array of columns to retrieve, and an array of conditions. It constructs a valid SQL query string based on your input.</p>
+</div>

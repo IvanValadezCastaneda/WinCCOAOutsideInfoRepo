@@ -1,0 +1,116 @@
+﻿@page
+@model WinCCOAOutsideInfoRepo.Pages.UTCTimeConversionModel
+@{ 
+    ViewData["Title"] = "UTC Time Conversion Trick";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <h3>Handling Time Zone Differences in JSON Encoding/Decoding</h3>
+    <p>When you encode and decode time values with JSON, you might encounter time zone discrepancies. The encoded time is converted to UTC, and when decoded, it reflects the time zone in which it is decoded. To mitigate this issue and retain the original time value, you can use the following function to adjust the time by your local time zone offset before encoding:</p>
+
+    <pre><code>
+public time adjustTimeToUTC(time localTime, int offsetHours) {
+    int yearG = year(localTime);
+    int monthG = month(localTime);
+    int dayG = day(localTime);
+    int hourG = hour(localTime);
+    int minuteG = minute(localTime);
+    int secondG = second(localTime);
+
+    hourG += offsetHours;
+    while (hourG >= 24) {
+        hourG -= 24;
+        dayG++;
+        if (dayG > makeTime(yearG, monthG, 1).daysInMonth()) {
+            dayG = 1;
+            monthG++;
+            if (monthG > 12) {
+                monthG = 1;
+                yearG++;
+            }
+        }
+    }
+    while (hourG < 0) {
+        hourG += 24;
+        dayG--;
+        if (dayG <= 0) {
+            monthG--;
+            if (monthG <= 0) {
+                monthG = 12;
+                yearG--;
+            }
+            dayG = makeTime(yearG, monthG, 1).daysInMonth();
+        }
+    }
+
+    time adjustedTime = makeTime(yearG, monthG, dayG, hourG, minuteG, secondG);
+    return adjustedTime;
+}
+    </code></pre>
+
+    <p>To use this function, simply pass in your local time and the offset from UTC. For instance, if your local time is 6 hours behind UTC, you can adjust the time as follows:</p>
+
+    <pre><code>time utcStartTime = adjustTimeToUTC(utcTimeStart, -6);</code></pre>
+
+    <p>This adjustment ensures that when you encode the time into JSON and later decode it, you can apply the inverse of your time zone offset to retrieve the original time, thus avoiding any discrepancies due to time zone conversions.</p>
+</div>

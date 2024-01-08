@@ -1,7 +1,7 @@
 ﻿@page
 @model WinCCOAOutsideInfoRepo.Pages.isDataTypeModel
 @{
-    ViewData["Title"] = "isDataType Function";
+    ViewData["Title"] = "Data Type Functions";
 }
 
 <style>
@@ -63,3 +63,43 @@
         border-radius: 4px;
     }
 </style>
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <h3>Data Type Checking Functions</h3>
+    <p>In WinCC OA, you can perform data type checking using various functions to ensure that you are working with the correct data types in your scripts and modules. Here are three important functions for data type checking:</p>
+
+    <ol>
+        <li><strong><code>getTypeName(expression)</code></strong></li>
+        <p>This function returns the data type of any Control expression as a string. It helps you identify the data type of a variable or expression.</p>
+
+        <li><strong><code>dpElementType(dp)</code></strong></li>
+        <p>Use this function to get the data type of a data point element. It returns an integer value representing the data type. Refer to the provided constants for data type values.</p>
+
+        <li><strong><code>getType(expression)</code></strong></li>
+        <p>This function queries the data type of any Control expression. It returns an integer constant representing the data type. You can use this function to perform data type checks in your scripts.</p>
+    </ol>
+
+    <p>When working with WinCC OA scripts and modules, it's essential to ensure that you are handling the correct data types. Here's a summary of how to use these functions for data type checking:</p>
+
+    <ol>
+        <li>Use <code>getTypeName(expression)</code> to identify the data type of any Control expression as a string.</li>
+        <li>For checking data point elements, employ <code>dpElementType(dp)</code>. Refer to the provided integer constants for data type values.</li>
+        <li>Utilize <code>getType(expression)</code> to query the data type of a Control expression and compare it with the expected data type constants for validation.</li>
+    </ol>
+
+    <h3>Efficient Data Type Checking with a Custom Library</h3>
+    <p>Streamline your WinCC OA scripting with a custom library...Similar to something like this will ocurr when using the function</p>
+
+    <form method="post">
+        <label for="userInput">getTypeName():</label>
+        <input type="text" id="userInput" name="UserInput" />
+        <input type="submit" value="Check Data Type" />
+    </form>
+
+    @if (Model.DataTypeMessage != null)
+    {
+        <p>@Model.DataTypeMessage</p>
+    }
+</div>

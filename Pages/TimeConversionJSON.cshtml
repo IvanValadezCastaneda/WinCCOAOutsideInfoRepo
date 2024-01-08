@@ -1,0 +1,110 @@
+﻿@page
+@model WinCCOAOutsideInfoRepo.Pages.TimeConversionJSONModel
+@{
+    ViewData["Title"] = "Conversion from JSON to time";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <h3>Converting JSON Time Strings to Time Data Type</h3>
+    <p>When receiving time information in JSON format, such as "2023-11-24T06:00:00.000Z", it is often in UTC format. Directly using this string in a time-sensitive application may lead to incorrect time representations due to local time zone differences. To correctly convert this UTC time string to the local `time` data type, we can use a custom function in WinCC OA. This function parses the string and creates a `time` object that accurately reflects the local time it represents.</p>
+
+    <h4>The Issue:</h4>
+    <p>JSON-encoded time is in UTC format, which can lead to discrepancies when used directly in time zones other than UTC.</p>
+
+    <h4>The Solution:</h4>
+    <p>The custom function below takes the JSON time string and converts it into a `time` data type:</p>
+
+    <pre><code>
+public time TimeConversion(string timeString){
+    string startTimeProxy = timeString;
+    dyn_string startDateTimeSplit = startTimeProxy.split("T");
+    string startDateSplitZ = startDateTimeSplit.at(0);
+    string startDateSplitO = startDateTimeSplit.at(1);
+
+    dyn_string startDateSplitZS = startDateSplitZ.split("-");
+    dyn_string startDateSplitOS = startDateSplitO.split(":");
+
+    string startDateSplitOSO = startDateSplitOS.at(1);
+    dyn_string startDateSplitOSOS = startDateSplitOSO.split(".");
+
+    int startYear = (int)startDateSplitZS.at(0);
+    int startMonth = (int)startDateSplitZS.at(1);
+    int startDay = (int)startDateSplitZS.at(2);
+
+    int startHour = (int)startDateSplitOS.at(0);
+    int startMinute = (int)startDateSplitOSOS.at(0);
+
+    time startTime = makeTime(startYear, startMonth, startDay, startHour, startMinute, 0);
+    return startTime;
+}
+    </code></pre>
+
+    <h4>How to Use:</h4>
+    <p>Simply pass the JSON time string to the function. The function will parse the string and return a `time` data type that corresponds to the time represented in the string, adjusted to the local time zone:</p>
+
+    <pre><code>time localTime = TimeConversion("2023-11-24T06:00:00.000Z");</code></pre>
+
+    <h4>Nuances:</h4>
+    <p>The function assumes that the input time string is in a specific format, typically ISO 8601. If the time string format varies, the function may need to be adjusted accordingly. Additionally, it currently does not handle time zones or daylight saving time changes automatically. For such cases, further enhancements to the function might be necessary.</p>
+</div>
