@@ -4,6 +4,48 @@
     ViewData["Title"] = "DayPicker in WinCC OA";
 }
 
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <p>This page demonstrates how to implement a date and time picker in WinCC OA. When an input field is clicked, a date and time picker will pop up, allowing the user to select a date and time. The selected value is then formatted and displayed in the input field.</p>
+
+    <h2>Implementing the Date and Time Picker</h2>
+    <p>To display a date and time picker when an input field is clicked, you can use the <code>dateTimePicker</code> function. Once a selection is made, the value is converted to a string using <code>formatTime</code> and displayed in the input field.</p>
+    <pre><code>
+    // This example is triggered when a specific input field is clicked.
+    // Replace 'YourInputField' with the actual panel element name.
+    // [YourInputField] [12] - [Clicked]
+    #uses "sched"
+    main(mapping event)
+    {
+        time selectedTime;
+        dateTimePicker(selectedTime, YourInputField);
+        string formattedTime = formatTime("%d/%m/%y", selectedTime);
+        YourInputField.text(formattedTime);
+    }
+    </code></pre>
+
+    <h2>Formatting the Time</h2>
+    <p>The <code>formatTime</code> function allows you to format the time in a user-friendly manner. You can specify the desired format using the parameters described below.</p>
+    <pre><code>
+    // Example usage of formatTime to format the selected time
+    string formattedTime = formatTime("%d/%m/%y %H:%M", selectedTime);
+    // This will format the time as 'Day/Month/Year Hour:Minute'
+    </code></pre>
+
+    <h2>Available Formatting Parameters</h2>
+    <p>Below is a list of parameters you can use with <code>formatTime</code> to customize the time format:</p>
+    <ul>
+        <li>%d - Day of the month (01 - 31)</li>
+        <li>%m - Month (01 - 12)</li>
+        <li>%y - Year without the century (00 - 99)</li>
+        <li>%Y - Year with the century</li>
+        <li>%H - Hour (00 - 23)</li>
+        <li>%I - Hour (00 -12)</li>
+        <li>%M - Minute (00 - 59)</li>
+        <li>%S - Second (00 - 59)</li>
+    </ul>
+</div>
+
 <style>
     body {
         font-family: Arial, sans-serif;
