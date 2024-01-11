@@ -21,19 +21,19 @@
     display: flex; 
     flex-direction: column;
     margin: 0 15px 30px;
-    min-width: 250px; /* Minimum width */
-    max-width: 300px; /* Maximum width */
-    width: 100%; /* Flex basis width */
-    flex: 1; /* Grow to fill the space */
-    overflow: hidden; /* Ensures the content does not overflow */
+    min-width: 250px; 
+    max-width: 300px; 
+    width: 100%; 
+    flex: 1; 
+    overflow: hidden; 
 }
 
 .card-body {
-    flex: 1 1 auto; /* Flex-grow, flex-shrink, flex-basis */
+    flex: 1 1 auto;
     display: flex; 
     flex-direction: column;
     justify-content: space-between; 
-    padding: 15px; /* Padding inside card */
+    padding: 15px; 
 }
 
 .card-title {
@@ -45,14 +45,14 @@
     color: #6c757d;
     font-size: 0.9rem;
     margin-bottom: 20px;
-    flex-grow: 1; /* Allows the text to grow and push the button down */
+    flex-grow: 1; 
 }
 
 .btn-primary {
     background-color: #007bff;
     border-color: #007bff;
     transition: background-color 0.3s;
-    margin-top: auto; /* Pushes the button to the bottom */
+    margin-top: auto; 
 }
 
 .btn-primary:hover {
@@ -67,13 +67,13 @@
 }
 
 .col-md-3 {
-    flex: 0 0 25%; /* Sets the base width for the flex item */
-    max-width: 25%; /* Prevents it from growing beyond this max width */
+    flex: 0 0 25%; 
+    max-width: 25%; 
     padding-right: 15px;
     padding-left: 15px;
     box-sizing: border-box;
-    display: flex; /* Set display flex to align the cards vertically */
-    align-items: stretch; /* Stretch items to fill the height */
+    display: flex; 
+    align-items: stretch; 
 }
 </style>
 
@@ -222,6 +222,15 @@
                     <h5 class="card-title">Day Time Picker in WinCC OA</h5>
                     <p class="card-text">Day Picker included in WinCC OA and some extra options</p>
                     <a asp-area="" asp-page="/DayPicker" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Create and Populate Simple Tables</h5>
+                    <p class="card-text">An Easy solution to create and populate Tables within Panels in Projects</p>
+                    <a asp-area="" asp-page="/AutoTables" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
         </div>
