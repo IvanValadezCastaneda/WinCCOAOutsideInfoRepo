@@ -1,0 +1,161 @@
+﻿@page
+@model WinCCOAOutsideInfoRepo.Pages.AutoTablesModel
+@{
+    ViewData["Title"] = "Generating Tables within Panels";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <p>This page outlines a straightforward method for managing a "Check Details" table within WinCC OA. While this example demonstrates basic functionality, it's important to remember that it should not be used for storing sensitive or critical information due to its basic nature and the use of text files for data persistence.</p>
+
+    <h2>Understanding the Approach</h2>
+    <p>The method provided here is intended for simple applications where complex data handling and high security are not paramount. The data is stored in a plain text file, which inherently does not offer any encryption or protection against unauthorized access. Therefore, it's crucial to ensure that:</p>
+    <ul>
+        <li>The text file is stored securely, with access permissions set appropriately.</li>
+        <li>Regular backups are made to prevent data loss.</li>
+        <li>Any sensitive data is encrypted or handled by a more secure method.</li>
+    </ul>
+
+    <h2>Graphical Considerations</h2>
+    <p>While the code snippets provided handle the logic for managing the table's data, setting up the actual table in terms of rows, columns, and appearance must be done separately within the WinCC OA GEDI. Ensure that the graphical table object is configured correctly to match the expectations of the code.</p>
+
+
+    <p>This example of how to manage a simple table in WinCC OA that logs equipment details such as IP addresses, ports,voltages, sequences, anything that you want really is going to be a simple "Check Details" Table with the ability to read from and write to a text file.</p>
+
+    <h2>Initializing the Table</h2>
+    <p>To initialize the table and set up the headers:</p>
+    <pre><code>
+    void initialize() {
+        // Assuming 'tableExample' is the name of your table shape in the panel
+        shape tableShape = getShape("tableExample");
+        tableShape.namedColumnHeader("#1", "Equipment");
+        tableShape.namedColumnHeader("#2", "Port");
+        tableShape.namedColumnHeader("#3", "IP");
+        PopulateTableFromFile();
+    }
+    </code></pre>
+
+
+    <h2>Adding a Row to the Table</h2>
+    <p>To add a new row to the table with IP, port, and equipment data:</p>
+    <pre><code>
+    void AddRowToTable(string ip, string port, string equipment) {
+        shape tableShape = getShape("tableExample");
+        tableShape.appendLine("#3", ip, "#2", port, "#1", equipment);
+    }
+    </code></pre>
+
+    <h2>Populating Table from File</h2>
+    <p>To populate the table from a file, reading each line and adding it as a row:</p>
+    <pre><code>
+    void PopulateTableFromFile() {
+        // File path should be relative to project directory for portability
+        string filePath = "data/IPPorts.txt";
+        file f = fopen(filePath, "a+");
+        if (f)
+        {
+            shape tableShape = getShape("tableExample");
+
+            tableShape.namedColumnHeader("#1", "Equipo");
+            tableShape.namedColumnHeader("#2", "Puerto");
+            tableShape.namedColumnHeader("#3", "IP");
+            tableShape.deleteAllLines();
+
+            bytesRead = fscanf(f, "%[^\n]\n", line);
+
+            while (bytesRead > 0)
+            {
+                string ip, port, equipo;
+
+                bytesRead = fscanf(f, "%s %s %[^\n]\n", ip, port, equipo);
+
+                if (bytesRead == 3)
+                {
+                    AddRowToTable(ip, port, equipo);
+                }
+            }
+
+            fclose(f);
+        }
+        else
+        {
+            DebugN("Error opening the file.");
+        }
+    }
+    </code></pre>
+
+    <h2>Saving Changes to File</h2>
+    <p>To save changes made to the table back to the file:</p>
+    <pre><code>
+    void SaveTableToFile() {
+        shape tableShape = getShape("tableExample");
+        string filePath = "data/IPPorts.txt";
+        tableShape.writeToFile(filePath, TABLE_WRITE_ALL_COLUMNS | TABLE_WRITE_COLUMN_HEADER, " ");
+    }
+    </code></pre>
+
+    <p>Remember, this guide focuses on the data logic behind the table. The graphical user interface, including the table's rows, columns, and overall layout, will need to be set up in the GEDI environment of WinCC OA. This separation allows for flexibility in designing the user interface while maintaining a simple backend logic for data operations.</p>
+   
+    <p>Note: File operations in WinCC OA are similar to those in C++ using the standard C library. Use file functions like <code>fopen</code>, <code>fgets</code>, and <code>fclose</code> to manage file I/O.</p>
+</div>
