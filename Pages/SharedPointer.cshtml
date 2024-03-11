@@ -3,6 +3,109 @@
 @{
     ViewData["Title"] = "Introduction to Shared Pointers";
 }
+<h1>@ViewData["Title"]</h1>
+
+<article>
+    <h2>Why Shared Pointers Matter</h2>
+    <p>
+        Imagine you're collaborating on a project. Everyone needs access to the same tool, but you also need to ensure it's available for the next person when you're done with it. This is what shared pointers do in the memory management realm of WinCC OA: they ensure resources are optimally used and released when no longer needed.
+    </p>
+</article>
+
+<article>
+    <h2>Crafting Your First Shared Pointer</h2>
+    <p>
+        Just tell the shared pointer what type of data it will hold and then create it with <code>new</code>. Voilà, you're set!
+    </p>
+    <pre><code>
+shared_ptr&lt;int&gt; scoreKeeper = new int;
+    </code></pre>
+</article>
+
+<article>
+    <h2>Playing Pass-the-Parcel with Pointers</h2>
+    <p>
+        Shared pointers can be passed around. As long as one hand is holding it, it stays warm (i.e., the memory isn't freed). When everyone lets go, it cools down (i.e., the memory is freed).
+    </p>
+    <pre><code>
+shared_ptr&lt;Game&gt; gameInstance = new Game();
+shared_ptr&lt;Game&gt; anotherInstance = gameInstance;
+    </code></pre>
+</article>
+
+<article>
+    <h2>The 'Nos' of Shared Pointers</h2>
+    <p>
+        While shared pointers are pretty flexible, they have their limits. Don't get too pointer-happy and create a pointer to a pointer or try to pass them by reference to a function. That's a no-go zone.
+    </p>
+</article>
+
+<article>
+    <h2>Downcasting</h2>
+    <p>
+        Sometimes, you might need your general pointer to get a bit more specific. That's where downcasting comes in handy, allowing you to get more granular with your shared pointers.
+    </p>
+    <pre><code>
+shared_ptr&lt;Widget&gt; pWidget = new SpecialWidget();
+shared_ptr&lt;SpecialWidget&gt; pSpecial;
+pSpecial = static_pointer_cast&lt;SpecialWidget&gt;(pWidget);
+    </code></pre>
+</article>
+
+<article>
+    <h2>Shared Pointer Insights</h2>
+    <p>
+        Utilizing shared pointers can dramatically improve the management of object lifecycles in your applications. For instance, a shared pointer to a <code>TrafficObject</code> can be changed in one place, and like a live update, reflect across all referencing points.
+    </p>
+</article>
+
+<article>
+    <h2>Transcending Scope with Shared Pointers</h2>
+    <p>
+        Even when the initial method call ends, the life of objects you've interacted with doesn't have to. Shared pointers keep them alive and accessible until every reference is done with them.
+    </p>
+</article>
+
+<article>
+    <h2>JSON and Shared Pointers</h2>
+    <p>
+        The versatility of shared pointers extends even further. Encode them into JSON, store them, share them - the possibilities for persistent state management and complex configurations are endless.
+    </p>
+    <pre><code>
+auto encodedPointer = jsonEncode(trafficScenario);
+// ... Later on
+auto decodedPointer = jsonDecode(encodedPointer);
+    </code></pre>
+</article>
+
+<article>
+    <h2>Auto-dereferencing</h2>
+    <p>
+        WinCC OA shared pointers have a neat trick up their sleeves. They auto-dereference, so you don't have to worry about the nitty-gritty details of accessing the underlying object.
+    </p>
+</article>
+
+<article>
+    <h2>Cleaning Up</h2>
+    <p>
+        With shared pointers, simply assigning <code>nullptr</code> does the trick, wiping the slate clean and freeing up memory like a courteous guest.
+    </p>
+</article>
+
+<article>
+    <h2>Same Pointer</h2>
+    <p>
+        Are two shared pointers identical twins or just lookalikes? Use <code>equalPtr</code> to solve the mystery and find out if they're pointing to the same object.
+    </p>
+</article>
+
+<article>
+    <h2>A Cautionary Tale</h2>
+    <p>
+        Beware of the memory management traps! Creating a mirror maze with shared pointers can be fun, but without a careful exit strategy (like setting them to <code>nullptr</code>), you might get lost in a memory leak.
+    </p>
+</article>
+
 
 <style>
     body {
