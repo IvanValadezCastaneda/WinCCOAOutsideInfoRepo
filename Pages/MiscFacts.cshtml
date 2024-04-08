@@ -1,8 +1,34 @@
 ﻿@page
 @model WinCCOAOutsideInfoRepo.Pages.MiscFactsModel
 @{
-    ViewData["Title"] = "Random Facts!";
+    ViewData["Title"] = "Random Leftovers";
 }
+
+<body>
+
+    <h1>@ViewData["Title"]</h1>
+
+    <div class="trivia-section">
+        <h2>Did You Know?</h2>
+        <div class="fact">
+            <p>
+                The Function <code>ChildPanelOnModalReturn()</code> does not direct to the actual documentation in the Help Page,
+                you have to go and click it because if not, nothing will be directed.
+            </p>
+        </div>
+        <div class="fact">
+            <p>
+                If you go into style sheet examples for QT devices in the WinCC OA documentation, it will point you to a page that
+                is no longer supported, leading to a 404 error. Specifically, in the "Available Classes" section where it mentions
+                "Examples of usage of the available classes, you can find in the external Qt documentation Qt Style Sheets Examples,"
+                it directs to a website which is no longer in use:
+                <a href="https://contribute.qt-project.org/doc/qt-5/stylesheet-examples.html" target="_blank">
+                    https://contribute.qt-project.org/doc/qt-5/stylesheet-examples.html
+                </a>.
+            </p>
+        </div>
+    </div>
+</body>
 
 <style>
     body {
@@ -61,5 +87,17 @@
         background-color: #e6e6e6;
         padding: 10px;
         border-radius: 4px;
+    }
+
+    .trivia-section {
+        margin-top: 40px;
+    }
+
+    .fact {
+        background-color: #f9f9f9;
+        border-left: 5px solid #4a90e2;
+        padding: 10px 20px;
+        margin: 10px 0;
+        font-style: italic;
     }
 </style>
