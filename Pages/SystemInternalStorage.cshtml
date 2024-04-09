@@ -1,8 +1,81 @@
 ﻿@page
 @model WinCCOAOutsideInfoRepo.Pages.SystemInternalStorageModel
 @{
-    ViewData["Title"] = "System Internal Storage";
+    ViewData["Title"] = "System Resources Monitoring";
 }
+
+<h1>System Resources Monitoring</h1>
+
+<section class="resource-monitoring">
+    <article>
+        <h2>Implementation Details</h2>
+        <p>
+            The following code snippet illustrates the approach to querying the system for HDD capacity and RAM usage. It accounts for redundant servers by accepting the server number as input and adjusting the data point references accordingly.
+        </p>
+        <p class="warning">
+            <strong>Important:</strong> It's imperative to handle internal data points with caution. Any unintended modification might lead to critical issues, potentially requiring a system reinstallation. Ensure that you are familiar with the data points you intend to monitor. Note that the HDD space monitored is specific to the drive where the project is installed, and the available RAM is just a snapshot of the current usage.
+        </p>
+        <pre><code>
+int HDDCapacityInt;
+int RamMemoryInt;
+int ServerNum = $iNumber;
+
+void initialize()
+{
+    ...
+    if (Server == nullptr){
+        DebugN("Failed to get server instance for:", ReceivedDollarParam);
+    }
+    string SystemNameServer = getSystemName();
+    string HDD;
+    string RAM;
+    if(ServerNum != 2)
+    {
+        HDD = "_ArchivDisk.AvailPerc";
+        RAM = "_MemoryCheck.FreePerc";
+    }
+    else
+    {
+        HDD = "_ArchivDisk_2.AvailPerc";
+        RAM = "_MemoryCheck_2.FreePerc";
+    }
+    dpConnect("getHDDCapacity",SystemNameServer + HDD);
+    dpConnect("getMemory", SystemNameServer + RAM);
+}
+
+void getHDDCapacity(string dpe, int percentage)
+{
+    int ProxyCapacityPercentage;
+    dpGet(dpe,ProxyCapacityPercentage);
+    HDDCapacity.setTxt((string)ProxyCapacityPercentage + " %");
+}
+
+void getMemory(string dpe, int percentage)
+{
+    int ProxyRamPercentage;
+    dpGet(dpe,ProxyRamPercentage);
+    RamMemory.setTxt((string)ProxyRamPercentage + " %");
+}
+        </code></pre>
+    </article>
+    <article>
+        <h2>Considerations for Redundant and Distributed Systems</h2>
+        <p>
+            The code differentiates between servers in a redundant setup by adjusting the data point strings based on the server number. This flexibility is crucial for systems with multiple servers, enabling targeted resource monitoring across different machine instances.
+        </p>
+        <p class="note">
+            <strong>Note:</strong> The approach outlined is primarily suited for redundant systems but can be adapted for distributed systems with appropriate modifications to the server identification logic.
+        </p>
+    </article>
+
+    <article>
+        <h2>Caveats and Additional Information</h2>
+        <p class="info">
+            For comprehensive monitoring, consider exploring additional system metrics and incorporating external tools or scripts that can provide a broader overview of system health and resource utilization.
+        </p>
+    </article>
+
+</section>
 
 <style>
     body {
@@ -62,4 +135,19 @@
         padding: 10px;
         border-radius: 4px;
     }
+    .warning 
+    { 
+        background-color: #ffcccb; padding: 10px;
+    }
+
+    .note 
+    { 
+        background-color: #e6e6e6; padding: 10px;
+    }
+
+    .info 
+    { 
+        background-color: #d1ecf1; padding: 10px;
+    }
+
 </style>
