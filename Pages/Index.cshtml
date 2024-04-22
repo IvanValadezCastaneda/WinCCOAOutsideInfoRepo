@@ -9,7 +9,7 @@
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* Adjusted to flex-start for consistent alignment */
+    justify-content: center; 
     align-items: stretch;
 }
 
@@ -17,7 +17,7 @@
     border: 1px solid #e5e5e5;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s, transform 0.3s;
     display: flex; 
     flex-direction: column;
     margin: 0 15px 30px;
@@ -66,16 +66,30 @@
     margin-left: -15px;
 }
 
-.col-md-3 {
-    flex: 0 0 25%; 
+.col-md-5 {
+    flex: 0 0 5%; 
     max-width: 25%; 
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 5px;
+    padding-left: 5px;
     box-sizing: border-box;
     display: flex; 
     align-items: stretch; 
 }
+
+/* Adding hover effect to bring the card to the front on small screens */
+@@media (max-width: 767px) { /* Corrected media query */
+    .card {
+        transform: scale(0.9); /* Reduce size to create stacking effect */
+        transition: transform 0.3s;
+    }
+
+    .card:hover {
+        transform: scale(1.1); /* Enlarge when hovered */
+        z-index: 10; /* Bring the card to the front */
+    }
+}
 </style>
+
 
 <div class="container">
     <h1>@ViewData["Title"]</h1>
