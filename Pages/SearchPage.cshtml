@@ -1,0 +1,10 @@
+﻿@page
+@model WinCCOAOutsideInfoRepo.Pages.SearchPageModel
+@{
+    ViewData["Title"] = "Search";
+}
+
+<form method="get" action="/search-results">
+    <input type="text" name="query" placeholder="Search..." />
+    <button type="submit">Search</button>
+</form>
