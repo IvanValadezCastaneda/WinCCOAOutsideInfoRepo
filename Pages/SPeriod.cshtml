@@ -4,6 +4,84 @@
     ViewData["Title"] = "Get the Change Based on Period";
 }
 
+<h1>@ViewData["Title"]</h1>
+
+<article>
+    <h2>Introduction to Monitoring Data Point Commands</h2>
+    <p>
+        Monitoring data points and ensuring they return to a predefined state after a certain threshold is a common requirement in automation systems. This guide presents a programming trick in WinCC OA to check for changes in data points of a specific class and reset them if they remain in a changed state beyond a specified threshold.
+    </p>
+</article>
+
+<article>
+    <h2>Monitoring Data Point Changes</h2>
+    <p>
+        The following code continuously monitors a list of data points, checking if they have been altered. If a data point remains in a changed state for longer than the defined threshold, the system will reset it to its original state. This approach helps in handling commands that might get stuck or remain active for too long.
+    </p>
+    <pre><code>// Function to Monitor and Reset Data Point Commands
+void MonitorDataPoints(dyn_string devices) {
+    while(TRUE) {
+        for(int i = 0; i < dynlen(devices); i++) {
+            dyn_string dataPoints = dpNames(devices.at(i) + "_Command" + "*");
+            CheckAndResetDataPoints(dataPoints);
+        }
+        delay(4);
+    }
+}
+
+void CheckAndResetDataPoints(dyn_string dataPoints) {
+    for(int i = 0; i < dynlen(dataPoints); i++) {
+        bool currentValue;
+        time timestampStr;
+        if(dpElementType(dataPoints.at(i)) == 23){
+            dpGet(dataPoints.at(i), currentValue);
+            if(currentValue) {
+                dpGet(dataPoints.at(i) + ":_original.._stime", timestampStr);
+                time currentTime = getCurrentTime();
+                if(period(currentTime) - period(timestampStr) >= threshold) {
+                    DebugN("Resetting command due to threshold ", dataPoints.at(i), currentValue);
+                    dpSet(dataPoints.at(i), FALSE);
+                }
+            }
+        }
+    }
+}</code></pre>
+</article>
+
+<article>
+    <h2>Understanding the Code</h2>
+    <p>
+        Let's break down the key parts of the code:
+    </p>
+    <ul>
+        <li>
+            <code>MonitorDataPoints(dyn_string devices)</code>: This function runs indefinitely, monitoring a list of devices. For each device, it retrieves the data points and checks their state.
+        </li>
+        <li>
+            <code>CheckAndResetDataPoints(dyn_string dataPoints)</code>: This function iterates through the data points, checks their current value, and retrieves the timestamp of the last change using <code>dpGet</code>. If the data point has been active for longer than the specified threshold, it resets the data point.
+        </li>
+        <li>
+            <code>dpElementType(dataPoints.at(i)) == 23</code>: This line ensures that the data point is of the correct type (in this case, type 23).
+        </li>
+        <li>
+            <code>dpGet(dataPoints.at(i) + ":_original.._stime", timestampStr);</code>: This retrieves the time of the last change of the data point without the use of archiving, allowing for real-time monitoring.
+        </li>
+        <li>
+            <code>period(currentTime) - period(timestampStr) >= threshold</code>: This checks if the duration since the last change exceeds the defined threshold.
+        </li>
+        <li>
+            <code>dpSet(dataPoints.at(i), FALSE);</code>: This resets the data point if the threshold is exceeded.
+        </li>
+    </ul>
+</article>
+
+<article>
+    <h2>Conclusion</h2>
+    <p>
+        This programming trick provides a robust method for monitoring and resetting commands in WinCC OA. By continuously checking the state of data points and ensuring they revert to a safe state after a defined period, you can enhance the reliability and stability of your automation systems.
+    </p>
+</article>
+
 <style>
     body {
         font-family: Arial, sans-serif;
