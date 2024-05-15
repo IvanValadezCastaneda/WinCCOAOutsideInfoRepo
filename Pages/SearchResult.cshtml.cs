@@ -8,9 +8,11 @@ namespace WinCCOAOutsideInfoRepo.Pages
 {
     public class SearchResultModel : PageModel
     {
+
         [BindProperty(SupportsGet = true)]
         public string Query { get; set; }
 
+        
         public List<RazorPageInfo> SearchResults { get; set; }
 
         public void OnGet()
@@ -38,6 +40,7 @@ namespace WinCCOAOutsideInfoRepo.Pages
 
             return results;
         }
+        
     }
     public class RazorPageInfo
     {
