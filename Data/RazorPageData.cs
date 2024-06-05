@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WinCCOAOutsideInfoRepo.Data
+﻿namespace WinCCOAOutsideInfoRepo.Data
 {
     public static class RazorPageData
     {

@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WinCCOAOutsideInfoRepo.Data;
+using WinCCOAOutsideInfoRepo.Data; // Add this line to include the namespace
 
 namespace WinCCOAOutsideInfoRepo.Pages
-{   
+{
     public class SearchResultModel : PageModel
     {
-
         [BindProperty(SupportsGet = true)]
         public string Query { get; set; }
 
-        
         public List<RazorPageInfo> SearchResults { get; set; }
 
         public void OnGet()
@@ -30,7 +28,7 @@ namespace WinCCOAOutsideInfoRepo.Pages
 
             var results = new List<RazorPageInfo>();
 
-            foreach (var page in YourRazorPageCollection)
+            foreach (var page in RazorPageData.Pages)
             {
                 if (page.Content.Contains(query, StringComparison.OrdinalIgnoreCase) ||
                     page.Title.Contains(query, StringComparison.OrdinalIgnoreCase))
@@ -41,14 +39,5 @@ namespace WinCCOAOutsideInfoRepo.Pages
 
             return results;
         }
-        
     }
-    public class RazorPageInfo
-    {
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public string Url { get; set; }
-        public string Excerpt { get; set; }
-    }
-
 }
