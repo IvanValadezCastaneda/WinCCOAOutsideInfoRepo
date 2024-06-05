@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WinCCOAOutsideInfoRepo.Data;
 
 namespace WinCCOAOutsideInfoRepo.Pages
-{
+{   
     public class SearchResultModel : PageModel
     {
 

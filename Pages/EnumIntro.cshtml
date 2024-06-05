@@ -1,4 +1,237 @@
 ﻿@page
 @model WinCCOAOutsideInfoRepo.Pages.EnumIntroModel
 @{
+    ViewData["Title"] = "Exploring Enumerators in WinCC OA";
 }
+
+<h1>@ViewData["Title"]</h1>
+
+<article>
+    <h2>Introduction to Enumerators</h2>
+    <p>
+        Enumerators, or enums, are a powerful feature in programming languages like C++ and WinCC OA. An enum is a user-defined data type that consists of a set of named integral constants. They make code more readable and maintainable by giving meaningful names to values, instead of using arbitrary numbers. Enums are particularly useful in scenarios where a variable can take one out of a small set of possible values.
+    </p>
+    <pre><code>
+enum DataType {
+  Integer = 1,
+  Float = 2,
+  String = 3,
+  Password = 4,
+  Time = 5
+};
+    </code></pre>
+</article>
+
+<article>
+    <h2>Purpose of Enumerators</h2>
+    <p>
+        Enums are used to define a collection of constants that represent discrete values. This helps in making the code more understandable and reduces the likelihood of errors by limiting the possible values a variable can take. Enums also allow for easier maintenance and updates to the code, as changes to the possible values only need to be made in one place.
+    </p>
+</article>
+
+<article>
+    <h2>Using Enumerators in WinCC OA</h2>
+    <p>
+        In WinCC OA, enumerators can be utilized to create extended properties in a pictogram within a panel. This allows for the creation of custom rules and options that can be selected via a combobox in the GEDI UI. Here’s an example of how to define and use an enum for this purpose:
+    </p>
+    <pre><code>
+enum DataType {
+  Integer = 1,
+  Float = 2,
+  String = 3,
+  Password = 4,
+  Time = 5
+};
+
+#property DataType DataTypeSelect DataType g_DataTypeSelect;
+
+public int getDataTypeSelect() {
+    return (int)g_DataTypeSelect;
+}
+
+public void setDataTypeSelect(int DataTypeSelect) {
+    g_DataTypeSelect = DataTypeSelect;
+}
+    </code></pre>
+    <p>
+        In this example, the <code>DataType</code> enum is used to define the data type for a pictogram. The property <code>DataTypeSelect</code> is recognized by the GEDI UI and appears as a combobox with the options defined in the enum. This allows for easy selection and application of data types within the pictogram.
+    </p>
+</article>
+
+<article>
+    <h2>Transforming and Reading Enum Values</h2>
+    <p>
+        When working with enums, it's essential to know how to read and transform their values for different purposes. WinCC OA provides functions like <code>enumKeys()</code> to retrieve the list of keys in an enumeration. Here’s an example:
+    </p>
+    <pre><code>
+enum enumLocal { A, B, C };
+
+main(mapping event) {
+    DebugN(enumKeys("enumLocal"));
+}
+    </code></pre>
+    <p>
+        This function returns the keys of the enumeration as a list in the order they were added. The output of the script would look something like this:
+    </p>
+    <pre><code>
+WCCOAui1:[dyn_string 3 items
+WCCOAui1:     1: "A"
+WCCOAui1:     2: "B"
+WCCOAui1:     3: "C"
+WCCOAui1:]
+    </code></pre>
+</article>
+
+<article>
+    <h2>Casting and Conversion of Enums</h2>
+    <p>
+        One of the key aspects of using enums is understanding how to cast and convert them to different types. In WinCC OA, enums can be cast to integers for various operations. This is particularly useful when passing the selected property to other functions or systems.
+    </p>
+    <pre><code>
+enum DataType {
+  Integer = 1,
+  Float = 2,
+  String = 3,
+  Password = 4,
+  Time = 5
+};
+
+public int getDataTypeSelect() {
+    return (int)g_DataTypeSelect;
+}
+
+public void setDataTypeSelect(int DataTypeSelect) {
+    g_DataTypeSelect = DataTypeSelect;
+}
+    </code></pre>
+    <p>
+        In the example above, the enum <code>DataType</code> is cast to an integer using the <code>getDataTypeSelect</code> method. This allows for the enum value to be used in various contexts where an integer representation is required.
+    </p>
+</article>
+
+<article>
+    <h2>Practical Applications of Enums</h2>
+    <p>
+        Enumerators are incredibly versatile and can be applied in numerous scenarios. For instance, they can be used to define a set of states for a system, configuration options, or types of input data. The ability to define and use enums in WinCC OA allows for more structured and readable code, making it easier to manage complex projects.
+    </p>
+    <p>
+        Here’s a more comprehensive example of using enums in WinCC OA to define different data types and apply them in a pictogram:
+    </p>
+    <pre><code>
+enum DataType {
+  Integer = 1,
+  Float = 2,
+  String = 3,
+  Password = 4,
+  Time = 5
+};
+
+#property DataType DataTypeSelect DataType g_DataTypeSelect;
+
+public int getDataTypeSelect() {
+    return (int)g_DataTypeSelect;
+}
+
+public void setDataTypeSelect(int DataTypeSelect) {
+    g_DataTypeSelect = DataTypeSelect;
+}
+
+void applyDataType() {
+    switch (g_DataTypeSelect) {
+        case DataType::Integer:
+            // Apply integer-specific logic
+            break;
+        case DataType::Float:
+            // Apply float-specific logic
+            break;
+        case DataType::String:
+            // Apply string-specific logic
+            break;
+        case DataType::Password:
+            // Apply password-specific logic
+            break;
+        case DataType::Time:
+            // Apply time-specific logic
+            break;
+        default:
+            // Handle default case
+            break;
+    }
+}
+    </code></pre>
+</article>
+
+            <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+    .warning 
+    { 
+        background-color: #ffcccb; padding: 10px;
+    }
+
+    .note 
+    { 
+        background-color: #e6e6e6; padding: 10px;
+    }
+
+    .info 
+    { 
+        background-color: #d1ecf1; padding: 10px;
+    }
+
+</style>
