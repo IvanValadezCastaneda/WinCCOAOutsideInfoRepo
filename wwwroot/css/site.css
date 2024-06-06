@@ -20,3 +20,21 @@ html {
 body {
   margin-bottom: 60px;
 }
+.form-inline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .form-inline .form-control {
+        margin-right: 10px;
+    }
+
+.btn-outline-success {
+    display: flex;
+    align-items: center;
+}
+
+    .btn-outline-success .bi-search {
+        margin-right: 5px;
+    }
