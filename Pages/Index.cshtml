@@ -21,9 +21,9 @@
     display: flex; 
     flex-direction: column;
     margin: 15px;
-    width: calc(25% - 30px); /* 4 cards per row with spacing */
     min-width: 250px; 
     max-width: 300px; 
+    width: calc(25% - 30px); /* Adjust width to ensure 4 cards per row */
     overflow: hidden; 
 }
 
@@ -61,6 +61,7 @@
 .row {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     margin-right: -15px;
     margin-left: -15px;
 }
@@ -76,8 +77,17 @@
 }
 
 @@media (max-width: 767px) {
+    .container{
+            margin-top: 20px;
+            padding-left: 2%;
+            padding-right: 2%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: stretch;
+            margin-left:2%;
+        }
     .card {
-        width: calc(100% - 30px); /* Full width for mobile */
         transform: scale(0.9); 
         transition: transform 0.3s;
     }
@@ -86,11 +96,71 @@
         transform: scale(1.1); 
         z-index: 10;
     }
+
+    .card {
+        width: calc(100% - 30px); /* Full width on small screens */
+    }
+}
+
+    @@media (max-width: 450px) {
+        .container {
+            margin-top: 20px;
+            padding-left: 2%;
+            padding-right: 2%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: stretch;
+            margin-left: .5%;
+        }
+    }
+
+html {
+  font-size: 14px;
+}
+
+@@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-inline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-inline .form-control {
+    margin-right: 10px;
+}
+
+.btn-outline-success {
+    display: flex;
+    align-items: center;
+}
+
+.btn-outline-success .bi-search {
+    margin-right: 5px;
 }
 </style>
 
 <div class="container">
     <h1>@ViewData["Title"]</h1>
+
     <div class="row">
         <div class="col-md-3 mb-4">
             <div class="card">
@@ -272,7 +342,7 @@
                 </div>
             </div>
         </div>
-                <div class="col-md-3 mb-4">
+        <div class="col-md-3 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Get Changes based in a Time Period</h5>
@@ -290,7 +360,7 @@
                 </div>
             </div>
         </div>
-                 <div class="col-md-3 mb-4">
+        <div class="col-md-3 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Introduction to Enmerators in WinCC OA</h5>
