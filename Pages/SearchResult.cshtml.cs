@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WinCCOAOutsideInfoRepo.Data; // Add this line to include the namespace
+using WinCCOAOutsideInfoRepo.Data;
 
 namespace WinCCOAOutsideInfoRepo.Pages
 {

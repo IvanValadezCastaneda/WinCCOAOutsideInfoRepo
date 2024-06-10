@@ -8,14 +8,14 @@
             {
                 Title = "System Information",
                 Content = "Explore tips and tricks for managing system information.",
-                Url = "/system-information",
+                Url = "/SystemInfo",
                 Excerpt = "Explore tips and tricks for managing system information."
             },
             new RazorPageInfo
             {
                 Title = "Word Wrap Trick",
                 Content = "Learn how to handle word wrap in your WinCC OA project.",
-                Url = "/word-wrap-trick",
+                Url = "/WordWrap",
                 Excerpt = "Learn how to handle word wrap in your WinCC OA project."
             },
             // Add more pages here
