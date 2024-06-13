@@ -1,0 +1,17 @@
+﻿<h3>SearchBarComponent</h3>
+
+@code {
+    [Parameter] public EventCallback<string> OnSearch { get; set; }
+
+    private string searchText;
+
+    private void TriggerSearch()
+    {
+        OnSearch.InvokeAsync(searchText);
+    }
+}
+
+<form @onsubmit="TriggerSearch" role="search">
+    <input type="text" @bind="searchText" placeholder="Searching" />
+    <button type="submit">Search</button>
+</form>

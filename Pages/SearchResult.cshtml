@@ -1,0 +1,21 @@
+﻿@page
+@model WinCCOAOutsideInfoRepo.Pages.SearchResultModel
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h1>Search Results for "@Model.Query"</h1>
+
+@if (Model.SearchResults is null || !Model.SearchResults.Any())
+{
+    <p>No results found for "@Model.Query".</p>
+}
+else
+{
+    <ul>
+        @foreach (var result in Model.SearchResults)
+        {
+            <li><a href="@result.Url">@result.Title</a> - @result.Excerpt</li>
+        }
+    </ul>
+}

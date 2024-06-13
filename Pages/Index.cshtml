@@ -9,7 +9,7 @@
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* Adjusted to flex-start for consistent alignment */
+    justify-content: center;
     align-items: stretch;
 }
 
@@ -17,14 +17,13 @@
     border: 1px solid #e5e5e5;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s, transform 0.3s;
     display: flex; 
     flex-direction: column;
-    margin: 0 15px 30px;
+    margin: 15px;
     min-width: 250px; 
     max-width: 300px; 
-    width: 100%; 
-    flex: 1; 
+    width: calc(25% - 30px); /* Adjust width to ensure 4 cards per row */
     overflow: hidden; 
 }
 
@@ -62,6 +61,7 @@
 .row {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     margin-right: -15px;
     margin-left: -15px;
 }
@@ -74,6 +74,87 @@
     box-sizing: border-box;
     display: flex; 
     align-items: stretch; 
+}
+
+@@media (max-width: 767px) {
+    .container{
+            margin-top: 20px;
+            padding-left: 2%;
+            padding-right: 2%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: stretch;
+            margin-left:2%;
+        }
+    .card {
+        transform: scale(0.9); 
+        transition: transform 0.3s;
+    }
+
+    .card:hover {
+        transform: scale(1.1); 
+        z-index: 10;
+    }
+
+    .card {
+        width: calc(100% - 30px); /* Full width on small screens */
+    }
+}
+
+    @@media (max-width: 450px) {
+        .container {
+            margin-top: 20px;
+            padding-left: 2%;
+            padding-right: 2%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: stretch;
+            margin-left: .5%;
+        }
+    }
+
+html {
+  font-size: 14px;
+}
+
+@@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-inline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-inline .form-control {
+    margin-right: 10px;
+}
+
+.btn-outline-success {
+    display: flex;
+    align-items: center;
+}
+
+.btn-outline-success .bi-search {
+    margin-right: 5px;
 }
 </style>
 
@@ -258,6 +339,33 @@
                     <h5 class="card-title">Validate the Data Type of Input Objects</h5>
                     <p class="card-text">With this code you can check the Data Type of an Input and set parameters to characters</p>
                     <a asp-area="" asp-page="/InputTypeValidation" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Get Changes based in a Time Period</h5>
+                    <p class="card-text">Get Changes based on a time Period</p>
+                    <a asp-area="" asp-page="/SPeriod" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Understanding Casting and Conversion</h5>
+                    <p class="card-text">Brief Introduction of Variable Casting in WinCC OA and Convesion Methods</p>
+                    <a asp-area="" asp-page="/CastingVariables" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Introduction to Enmerators in WinCC OA</h5>
+                    <p class="card-text">Brief Introduction to Enumerators and useful features</p>
+                    <a asp-area="" asp-page="/EnumIntro" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
         </div>
