@@ -3,3 +3,19 @@
 @{
     ViewData["Title"] = "How to cretae CSV files in WinCC OA";
 }
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    When working with WinCC OA one thing that the Projects require more than getting signals from devices and communicating between each other is then to record those signals, evaluate them and then create reports based on the values
+    Simply put there are times when we need to create more flexible reports in order to understand that data and even though WinCC OA does contain a Reporting tool Embedded within the system this may not be the preffered way to take that date in order to manage it, the most easily managable way is using either .XLS or .CSV to conatin and retain large quantities of data
+    Now please be aware that this is not a replacement for some of the core functions for reporting data in WinCC OA such as the Internal Database, in this example I will only take data that is flowing in the system in the same moment when the script is being executed, meaning only data that is captured when the script is working however this does not mean that such use of the script could not be a function when using the dpQuery which i also describe in this Blog, and then the data from that result could be put inside of a .CSV file
+
+    Now as to how to Use this or where to Store it and call it, is simple but first there are a couple of things that you should have set before making use of this Script, the first one is the path where the files should be stored
+    Second then should be to standarize what you want to show in the CSV files, meaning the headers of the file and the data in which it will be populated
+    Third is if this Script because of the nature of scripting will be always running of be called inside of a function, this only means that we can then call if after something else is finished, i'd recommend to have this as a Control Script that remains running as a Manager and only be called when necesary via parameters or a public function,
+    This is because if you call it as function on its own and do not thread that function it could result in a very large delay when you wait for a function to finish because the data being collected is very large
+
+
+    Now with this function you can now create you own .CSV files within WinCC OA and share them to make reports or to edit them as you want, this enables much more options for logging and displaying historic graphs, just remeber that this is not a replcement for the Database of WinCC OA and it may require significantly more space with less data so be mindful of using it and the discarding the data when no longer nedded
+
+</div>
