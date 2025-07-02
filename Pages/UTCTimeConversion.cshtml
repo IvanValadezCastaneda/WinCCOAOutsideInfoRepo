@@ -63,7 +63,6 @@
     }
 </style>
 
-<div class="container">
     <h1>@ViewData["Title"]</h1>
     <h3>Handling Time Zone Differences in JSON Encoding/Decoding</h3>
     <p>When you encode and decode time values with JSON, you might encounter time zone discrepancies. The encoded time is converted to UTC, and when decoded, it reflects the time zone in which it is decoded. To mitigate this issue and retain the original time value, you can use the following function to adjust the time by your local time zone offset before encoding:</p>
@@ -113,4 +112,3 @@ public time adjustTimeToUTC(time localTime, int offsetHours) {
     <pre><code>time utcStartTime = adjustTimeToUTC(utcTimeStart, -6);</code></pre>
 
     <p>This adjustment ensures that when you encode the time into JSON and later decode it, you can apply the inverse of your time zone offset to retrieve the original time, thus avoiding any discrepancies due to time zone conversions.</p>
-</div>

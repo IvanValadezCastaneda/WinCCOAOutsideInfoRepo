@@ -1,0 +1,149 @@
+﻿@page
+@model WinCCOAOutsideInfoRepo.Pages.BacnetPriorityModel
+@{
+    ViewData["Title"] = "Bacnet Priority Array";
+
+}
+
+<div class="container">
+    <h3>Bacnet Priority Array</h3>
+
+<p>Based on real-world experience, sometimes BACnet commands appear sent but aren’t applied—they revert to “relinquish” values. This guide walks you through the unexpected priority bit and driver quirks.</p>
+
+<section>
+    <h2> 1. Validate the Address</h2>
+    <p>First, ensure the datapoint address in your <code>in/out</code> configuration matches the actual device’s address.</p>
+    <p>If the address is wrong, commands will silently fail.</p>
+</section>
+
+<section>
+    <h2>2. BACnet Priority Array Basics</h2>
+    <p>BACnet uses a <strong>priority array</strong>: lower numbers have higher priority. The mirror object in the BACnet driver sets a default priority. If misconfigured, your commands may never take effect.</p>
+</section>
+
+<section>
+    <h2>3. The QC: <code>connUserBitPrio</code></h2>
+    <p>WinCC OA docs list this setting:</p>
+    <ul>
+        <li><code>connUserBitPrio</code>: user-bit priority (integer; default: 15; range 0–16)</li>
+        <li>0 means “no user bit” standard write</li>
+    </ul>
+    <p>But this is incomplete without matching the correct bit, changes revert</p>
+</section>
+
+<section>
+    <h2>4. Align Priority Bit with Device Settings</h2>
+    <p>After confirming correct datapoint and priority array, you must match the <code>connUserBitPrio</code> user-bit to what's accepted by the device. This depends on:</p>
+    <ul>
+        <li>The BACnet driver’s mirror object (AO/AV/BO/BV)</li>
+        <li>Device configuration (manual vs. automatic control)</li>
+    </ul>
+    <p>Example in your <code>config</code> or panel config:</p>
+    <pre><code>[bacnet]
+connUserBitPrio = 13</code></pre>
+    <p>This number must match the bit expected by the device’s priority array.</p>
+</section>
+
+<section>
+    <h2>5. Debugging with BACnet Device Explorer</h2>
+    <p>Use the WinCC OA BACnet Device Explorer:</p>
+    <ol>
+        <li>Create a BACnet device via the Explorer UI</li>
+        <li>Open the matching faceplate (e.g. <code>Setbutton_AO.pnl</code>) found under <code>...\BACnet_(Version)\panels\objects_parts\BACnet\</code></li>
+        <li>Send a value with different <code>connUserBitPrio</code> settings until it sticks</li>
+    </ol>
+    <p>This tells you the exact bit your device honors.</p>
+</section>
+
+<section>
+    <h2>6. Capture BACnet Traffic with Wireshark</h2>
+    <p>Use Wireshark filters to capture BACnet traffic and see if your command gets sent or if a lower-priority value overrides it:</p>
+    <ul>
+        <li><code>bacnet</code>  all BACnet traffic</li>
+        <li><code>bacnet.service_unconfirmed</code>, <code>bacnet.service_confirmed</code> filter by service type</li>
+        <li>Inspect the confirmed request to ensure the present-value and priority are correct</li>
+    </ul>
+</section>
+
+<section>
+    <h2> Complete Debugging Flow</h2>
+    <ol>
+        <li>Check datapoint address</li>
+        <li>Ensure BACnet mirror driver priority array is correct</li>
+        <li>Set <code>connUserBitPrio</code> to correct bit (not always default 15)</li>
+        <li>Use Device Explorer to test and confirm priority bit</li>
+        <li>Capture BACnet traffic with Wireshark to verify</li>
+    </ol>
+    <p>Once your bit matches the device’s accepted priorities, commands will stick reliably.</p>
+</section>
+
+<section>
+    <h2> Final Insights</h2>
+    <ul>
+        <li>BACnet writes may silently relinquish if priority values don’t match device expectations</li>
+        <li>Default driver bits (like 15) often aren’t enough test and adjust</li>
+        <li>WinCC OA device explorer and Wireshark are key tools to diagnose priority mismatches</li>
+    </ul>
+</section>
+
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>

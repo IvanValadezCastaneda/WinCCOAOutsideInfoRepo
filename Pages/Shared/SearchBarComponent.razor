@@ -11,7 +11,7 @@
     }
 }
 
-<form @onsubmit="TriggerSearch" role="search">
-    <input type="text" @bind="searchText" placeholder="Searching" />
-    <button type="submit">Search</button>
+<form class="search-bar-form" @onsubmit="TriggerSearch" role="search">
+    <input type="text" @bind="searchText" placeholder="Search" class="form-control" />
+    <button type="submit" class="btn btn-outline-success">Search</button>
 </form>

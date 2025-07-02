@@ -1,0 +1,172 @@
+﻿@page
+@model WinCCOAOutsideInfoRepo.Pages.CreateCSVModel
+@{
+    ViewData["Title"] = "How to create CSV files in WinCC OA";
+}
+
+    <h1>@ViewData["Title"]</h1>
+
+    <p>When working with WinCC OA, creating CSV files can be a practical way to record, evaluate, and report on data signals. Although WinCC OA includes built-in tools for reporting, they may not always suit every use case. CSV files provide flexibility and compatibility with tools like Excel, Python, or BI software.</p>
+
+    <section>
+        <h2>When to Use CSV Files</h2>
+        <p>This method is ideal for:</p>
+        <ul>
+            <li>Capturing live values flowing through the system at the time of script execution</li>
+            <li>Generating flexible, lightweight reports</li>
+            <li>Integrating with third-party analytics or Excel sheets</li>
+        </ul>
+        <p><strong>Note:</strong> This method <em>does not</em> replace core database-driven reporting in WinCC OA. Instead, it's complementary and works well for short-term, real-time logs.</p>
+    </section>
+
+    <section>
+        <h2>Setup Requirements</h2>
+        <ol>
+            <li><strong>Output path:</strong> Ensure the directory exists and the script has write permissions.</li>
+            <li><strong>Headers/Data structure:</strong> Choose your CSV headers and which datapoints to log.</li>
+            <li><strong>Execution model:</strong> Decide if this is scheduled, user-triggered, or long-running (e.g. CTRL script).</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Extended Usage Example Using dpConnect</h2>
+        <p>This example shows how to set up a control script that logs data from multiple trains using <code>dpConnect()</code>, <code>dpGet()</code>, and standard file handling.</p>
+
+        <pre><code class="language-cpp">// Define your datapoint structure and CSV headers
+const string LOG_PATH = "./log/";
+const dyn_string trainIds = {"TrainA", "TrainB"};
+
+void initLogging()
+{
+  system("mkdir -p " + LOG_PATH);
+
+  for (int i = 0; i < dynlen(trainIds); ++i)
+  {
+    string trainId = trainIds[i];
+    string folder = LOG_PATH + trainId + "/";
+    system("mkdir -p " + folder);
+
+    string fileName = folder + "telemetry.csv";
+    file f = fopen(fileName, "w");
+    if (f)
+    {
+      fprintf(f, "Timestamp,Latitude,Longitude,Speed,SensorID\n");
+      fclose(f);
+    }
+
+    dpConnect(".trainData." + trainId, "value", "trainDataHandler");
+  }
+}
+
+// Callback for dpConnect when train data changes
+event trainDataHandler(string dp, anytype val)
+{
+  string trainId = strsub(dp, strrchr(dp, '.') + 1);
+  time now = getCurrentTime();
+  string timestamp = formatTime("%Y-%m-%d %H:%M:%S", now);
+
+  float lat = dpGet(".trainData." + trainId + ".lat");
+  float lon = dpGet(".trainData." + trainId + ".lon");
+  float speed = dpGet(".trainData." + trainId + ".speed");
+  string sensorId = dpGet(".trainData." + trainId + ".detectedSensorId");
+
+  string fileName = LOG_PATH + trainId + "/telemetry.csv";
+  file f = fopen(fileName, "a");
+  if (f)
+  {
+    fprintf(f, "%s,%f,%f,%f,%s\n", timestamp, lat, lon, speed, sensorId);
+    fclose(f);
+  }
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>What This Script Does</h2>
+        <ul>
+            <li>Initializes directories and files for each train</li>
+            <li>Subscribes to updates via <code>dpConnect()</code> and reacts to changes</li>
+            <li>Logs timestamped telemetry data to each train's CSV file</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Recommendations</h2>
+        <ul>
+            <li>Use a background manager (CTRL script) for long-running logging</li>
+            <li>Generate unique file names (e.g., include timestamps) to avoid file overwrites</li>
+            <li>Escape values containing commas</li>
+            <li>Close files promptly to avoid buffer loss or memory leaks</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Further Ideas</h2>
+        <ul>
+            <li>Use <code>dpQuery()</code> to fetch historical data</li>
+            <li>Post-process CSVs for summaries or visualizations using external tools</li>
+            <li>Set up FTP or email delivery of logs via scripts</li>
+        </ul>
+    </section>
+
+    <p>Used correctly, CSV logging in WinCC OA can be powerful for diagnostics, audit trails, or integration with external applications.</p>
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>

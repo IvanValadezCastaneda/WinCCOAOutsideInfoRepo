@@ -1,0 +1,170 @@
+﻿@page
+@model WinCCOAOutsideInfoRepo.Pages.StylesheetInRuntimeModel
+@{
+    ViewData["Title"] = "Applying Stylesheets in Runtime";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>In WinCC OA, it's possible to dynamically change the style of a graphical object (shape) during runtime by using a small utility class that applies styles based on catalog values. This is useful for modern UI practices, visual states, and customization without hardcoding styles directly in panels.</p>
+
+<section>
+    <h2>What Is This For?</h2>
+    <p>This method lets you change the appearance of UI objects dynamically, without modifying panels manually or hardcoding styles. You define styles once in a catalog file, and apply them as needed through script.</p>
+    <p>The class <code>StyleSheetApplier</code> helps you apply a stylesheet stored inside a catalog file. It's reusable, straightforward, and integrates with the WinCC OA translation/message system.</p>
+</section>
+
+<section>
+    <h2>Defining the StyleSheetApplier Class</h2>
+    <p>This class looks up a style definition from a message catalog and applies it to a shape in the UI.</p>
+    <pre><code class="language-cpp">#uses "std"
+
+class StyleSheetApplier
+{
+  private static const string CATALOG = "stylesheet";
+  private static const OaLanguage language = OaLanguage::en_US; // Use your target language here
+
+  public StyleSheetApplier() {}
+
+  public static void applyStyle(shape s, string style, bool debug = false)
+  {
+    string styleSheet = getCatStr(CATALOG, style, getLangIdx(language));
+    dyn_errClass err = getLastError();
+
+    if (dynlen(err) > 0)
+    {
+      err.clear();
+      int idx = style.indexOf("_");
+      if (idx >= 0)
+      {
+        style.remove(0, idx + 1);
+        styleSheet = getCatStr(CATALOG, style, getLangIdx(language));
+        err = getLastError();
+
+        if (dynlen(err) > 0)
+        {
+          DebugTN(getErrorText(err), style);
+          return;
+        }
+      }
+    }
+
+    setValue(s, "styleSheet", styleSheet);
+    if (debug)
+      DebugTN(styleSheet);
+  }
+};</code></pre>
+</section>
+
+<section>
+    <h2>How to Use</h2>
+    <p>To change the style of a shape at runtime, you simply call:</p>
+    <pre><code class="language-cpp">void SetStyleIcon()
+{
+  string Style = RibbonAreaLink.getIcon();
+  StyleSheetApplier::applyStyle(getShape("areaModule"), Style);
+}</code></pre>
+
+    <p>In this example, the style name is retrieved dynamically and applied to a shape called <code>areaModule</code>.</p>
+</section>
+
+<section>
+    <h2>Catalog File Setup</h2>
+    <p>Create a file called <code>stylesheet.cat</code> under your project folder at:</p>
+    <pre><code>&lt;PROJECT&gt;/msg/en_US.utf8/stylesheet.cat</code></pre>
+
+    <p>Inside the catalog file, define your styles like so:</p>
+    <pre><code>CianBackground,QLabel { border: none; border-radius: 17px; background-color: rgb(0, 140, 154); }
+RedBackground,QLabel { border: none; border-radius: 17px; background-color: rgb(255, 0, 0); }
+CianBackgroundPush,QPushButton { border: none; border-radius: 17px; background-color: rgb(0, 140, 154); }
+RedBackgroundPush,QPushButton { border: none; border-radius: 17px; background-color: rgb(255, 0, 0); }</code></pre>
+
+    <p>Each entry must follow the format:</p>
+    <ul>
+        <li><strong>Key:</strong> Name of the style (used as lookup key)</li>
+        <li><strong>Value:</strong> The style rule applied to the specific object type (e.g., <code>QLabel</code>, <code>QPushButton</code>)</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Tips and Recommendations</h2>
+    <ul>
+        <li>Ensure the catalog file is compiled and available for the correct language and UTF-8 encoding.</li>
+        <li>Style names are case-sensitive and must match the catalog exactly.</li>
+        <li>You can call the function repeatedly to reapply different styles at runtime.</li>
+        <li>Consider building an enum or list of available styles to avoid hardcoding strings.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Possible Enhancements</h2>
+    <p>The current script is functional and clean. However, some improvements could include:</p>
+    <ul>
+        <li><strong>Caching stylesheets</strong> from the catalog to avoid repeated file lookups.</li>
+        <li><strong>Extending the method</strong> to apply styles to multiple shapes at once.</li>
+        <li><strong>Improving fallback logic</strong>: allow more intelligent key shortening beyond the first underscore.</li>
+        <li><strong>Validation layer</strong>: check if the shape exists or has the property before applying the style.</li>
+    </ul>
+</section>
+
+<p>With this method, you gain flexibility over UI appearance at runtime, bridging localization and visual customization efficiently in WinCC OA.</p>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        color: #4a90e2;
+        border-bottom: 2px solid #e6e6e6;
+        padding-bottom: 10px;
+    }
+
+    h3, h4, h5 {
+        color: #4a90e2;
+    }
+
+    form {
+        background-color: #f5f7f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #4a90e2;
+    }
+
+    input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="button"] {
+        margin-top: 20px;
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="button"]:hover {
+            background-color: #357ab7;
+        }
+
+    pre {
+        background-color: #e6e6e6;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>

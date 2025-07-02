@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">WinCC OA Outside Info</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -37,6 +37,7 @@
                                 <a class="dropdown-item" asp-area="" asp-page="/RuntimeTips">Tips for OOP $-Parameters in Runtime</a>
                                 <a class="dropdown-item" asp-area="" asp-page="/SharedPointer">Introduction to Shared Pointers</a>
                                 <a class="dropdown-item" asp-area="" asp-page="/CastingVariables">Understanding Casting and Conversion</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/CreateCSV">Create CSV files in WinCC OA</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -57,15 +58,18 @@
                                 <a class="dropdown-item" asp-area="" asp-page="/SystemInternalStorage">System Resources Monitoring</a>
                                 <a class="dropdown-item" asp-area="" asp-page="/InputTypeValidation">Validate the Data Type of Inputs</a>
                                 <a class="dropdown-item" asp-area="" asp-page="/SPeriod">Get the Change Based on Period</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/BacnetPriority">Bacnet Priority Array</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/CallExternalPrograms">Calling External Programs from WinCC OA</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/StylesheetInRuntime">Changing the Stylesheet while in Runtime</a>
                             </div>
                         </li>
                         <a class="nav-link text-dark" id="categoriesDropdown" role="button" asp-page="/MiscFacts">
                             Random Leftovers
                         </a>
                     </ul>
-                    <form method="get" action="/SearchResult" class="form-inline my-2 my-lg-0 d-flex align-items-center">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
-                        <button class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center" type="submit">
+                    <form method="get" action="/SearchResult" class="d-flex align-items-center gap-2" style="background: none; box-shadow: none; border: none;">
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="query" />
+                        <button class="btn btn-outline-success d-flex align-items-center" type="submit">
                             <span class="bi bi-search"></span>
                             <span>Search</span>
                         </button>
@@ -82,7 +86,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Ivan Valadez Castañeda - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2025 - Ivan Valadez Castañeda - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 
