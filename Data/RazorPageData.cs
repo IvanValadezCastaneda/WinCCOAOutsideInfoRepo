@@ -164,6 +164,34 @@
         Content = "Brief Introduction to Enumerators and useful features",
         Url = "/EnumIntro",
         Excerpt = "Brief Introduction to Enumerators and useful features."
+    },
+    new RazorPageInfo
+    {
+        Title = "Calling External Programs from WinCC OA",
+        Content = "call external programs like system tools or browsers seamlessly without direct user interaction with the OS",
+        Url = "/CallExternalPrograms",
+        Excerpt = "call external programs like system tools or browsers seamlessly without direct user interaction with the OS"
+    },
+    new RazorPageInfo
+    {
+        Title = "How to send Commands via Bacnet",
+        Content = "Example of how to send Commands via Bacnet in WinCC OA",
+        Url = "/BacnetPriority",
+        Excerpt = "Example of how to send Commands via Bacnet in WinCC OA"
+    },
+    new RazorPageInfo
+    {
+        Title = "Create CSV Files in WinCC OA",
+        Content = "How to create and populate CSV files in WinCC OA",
+        Url = "/CreateCSV",
+        Excerpt = "How to create and populate CSV files in WinCC OA"
+    },
+    new RazorPageInfo
+    {
+        Title = "Changing the Stylesheet while in Runtime",
+        Content = "How to change Styles while in Runtime for an Object",
+        Url = "/StylesheetInRuntime",
+        Excerpt = "How to change Styles while in Runtime for an Object"
     }
 };
 
