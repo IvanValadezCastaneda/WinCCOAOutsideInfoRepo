@@ -38,3 +38,199 @@ body {
     .btn-outline-success .bi-search {
         margin-right: 5px;
     }
+
+.search-bar-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.search-bar-form .form-control {
+    min-width: 220px;
+}
+
+.search-bar-form .btn-outline-success {
+    border: 1px solid #198754;
+    color: #198754;
+    background: #fff;
+    transition: background 0.2s, color 0.2s;
+}
+
+.search-bar-form .btn-outline-success:hover {
+    background: #198754;
+    color: #fff;
+}
+
+.container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.card {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s, transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    min-width: 250px;
+    max-width: 300px;
+    width: calc(25% - 30px); /* Adjust width to ensure 4 cards per row */
+    overflow: hidden;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s;
+    margin-top: auto;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-md-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding-right: 15px;
+    padding-left: 15px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: stretch;
+}
+
+@@media (max-width: 767px) {
+    .container {
+        margin-top: 20px;
+        padding-left: 2%;
+        padding-right: 2%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: stretch;
+        margin-left: 2%;
+    }
+
+    .card {
+        transform: scale(0.9);
+        transition: transform 0.3s;
+    }
+
+        .card:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+    .card {
+        width: calc(100% - 30px); /* Full width on small screens */
+    }
+}
+
+@@media (max-width: 450px) {
+    .container {
+        margin-top: 20px;
+        padding-left: 2%;
+        padding-right: 2%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: stretch;
+        margin-left: .5%;
+    }
+}
+
+html {
+    font-size: 14px;
+}
+
+@@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.form-inline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .form-inline .form-control {
+        margin-right: 10px;
+    }
+
+.btn-outline-success {
+    display: flex;
+    align-items: center;
+}
+
+    .btn-outline-success .bi-search {
+        margin-right: 5px;
+    }
+
+.header-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    margin: 16px 8px 0 8px;
+    padding: 0;
+}
+
+form.d-flex.align-items-center {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}

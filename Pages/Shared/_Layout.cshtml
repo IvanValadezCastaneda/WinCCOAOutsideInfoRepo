@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">WinCC OA Outside Info</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -67,9 +67,9 @@
                             Random Leftovers
                         </a>
                     </ul>
-                    <form method="get" action="/SearchResult" class="form-inline my-2 my-lg-0 d-flex align-items-center">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
-                        <button class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center" type="submit">
+                    <form method="get" action="/SearchResult" class="d-flex align-items-center gap-2" style="background: none; box-shadow: none; border: none;">
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="query" />
+                        <button class="btn btn-outline-success d-flex align-items-center" type="submit">
                             <span class="bi bi-search"></span>
                             <span>Search</span>
                         </button>
